@@ -20,16 +20,16 @@ export default function HomePage() {
 
           <figure className="landing-photo">
             <Image
-              src="/assets/remo-team.jpg"
-              alt="레인서울에서 함께한 REMO 팀 단체 사진"
-              width={1170}
-              height={870}
+              src="/assets/remo-ocean-cover.jpg"
+              alt="푸른 바다에서 해안으로 밀려오는 파도"
+              width={500}
+              height={751}
               priority
-              sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1200px) 92vw, 80vw"
+              sizes="(max-width: 720px) calc(100vw - 18px), (max-width: 1200px) 46vw, 520px"
             />
             <figcaption>
-              <span>REMO, TOGETHER</span>
-              <span>SEOUL · 2026</span>
+              <span>A WAVE, TOGETHER</span>
+              <span>LEINN SEOUL · 2026</span>
             </figcaption>
           </figure>
 
@@ -41,7 +41,7 @@ export default function HomePage() {
           </div>
 
           <div className="landing-edition" aria-hidden="true">
-            <span>TEAM PORTRAIT</span>
+            <span>COVER STORY</span>
             <span>ISSUE 02</span>
           </div>
         </section>
