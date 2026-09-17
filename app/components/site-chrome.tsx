@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 const navItems = [
   { href: "/", label: "홈" },
   { href: "/about", label: "팀 소개" },
+  { href: "/about-us", label: "ABOUT US" },
   { href: "/projects", label: "프로젝트" },
   { href: "/members", label: "멤버" },
 ];
@@ -18,7 +19,7 @@ export function SiteHeader() {
       <Link className="site-logo" href="/" aria-label="REMO 홈">REMO<span>✳</span></Link>
       <nav className="site-nav" aria-label="주요 메뉴">
         {navItems.map((item) => {
-          const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const active = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`);
           return <Link className={active ? "active" : ""} href={item.href} key={item.href}>{item.label}</Link>;
         })}
       </nav>
