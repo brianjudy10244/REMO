@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE IF NOT EXISTS site_settings (
   id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  team_name TEXT NOT NULL DEFAULT '리모',
+  team_name TEXT NOT NULL DEFAULT 'REMO',
   intro TEXT NOT NULL DEFAULT '레인서울 2년차',
   headline TEXT NOT NULL DEFAULT '열 명의 시선,',
   description TEXT NOT NULL DEFAULT '레인서울에서 함께하는 두 번째 해.' || E'\n' || '우리의 이름으로, 우리의 프로젝트를 만듭니다.',

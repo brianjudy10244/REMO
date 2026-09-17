@@ -5,7 +5,7 @@ import type { Asset, Item, SiteData, SiteSettings } from "@/lib/types";
 const sql = () => neon(requiredEnv("DATABASE_URL"));
 
 const settingsDefaults: SiteSettings = {
-  teamName: "리모",
+  teamName: "REMO",
   intro: "레인서울 2년차",
   headline: "열 명의 시선,",
   description: "레인서울에서 함께하는 두 번째 해.\n우리의 이름으로, 우리의 프로젝트를 만듭니다.",
