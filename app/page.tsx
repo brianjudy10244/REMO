@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteFrame } from "@/app/components/site-chrome";
 
-export const metadata: Metadata = { title: "REMO — Rain Seoul, Year 02" };
+export const metadata: Metadata = { title: "REMO — LEINN Seoul, Year 02" };
 
 export default function HomePage() {
   return (
@@ -11,7 +11,7 @@ export default function HomePage() {
       <main className="landing-main">
         <section className="landing-hero" aria-labelledby="landing-title">
           <div className="landing-heading">
-            <p className="eyebrow">RAIN SEOUL · SECOND YEAR</p>
+            <p className="eyebrow">LEINN SEOUL · SECOND YEAR</p>
             <h1 id="landing-title">
               <span>WE ARE</span>
               REMO<span className="landing-dot">.</span>

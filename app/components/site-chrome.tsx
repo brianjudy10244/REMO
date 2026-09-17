@@ -23,7 +23,7 @@ export function SiteHeader() {
           return <Link className={active ? "active" : ""} href={item.href} key={item.href}>{item.label}</Link>;
         })}
       </nav>
-      <span className="header-meta">RAIN SEOUL · YEAR 02</span>
+      <span className="header-meta">LEINN SEOUL · YEAR 02</span>
     </header>
   );
 }
