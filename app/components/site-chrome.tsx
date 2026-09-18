@@ -6,7 +6,6 @@ import type { ReactNode } from "react";
 
 const navItems = [
   { href: "/", label: "홈" },
-  { href: "/about", label: "팀 소개" },
   { href: "/about-us", label: "ABOUT US" },
   { href: "/projects", label: "프로젝트" },
   { href: "/members", label: "멤버" },

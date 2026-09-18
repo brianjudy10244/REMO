@@ -103,6 +103,13 @@ button, input, textarea { font: inherit; }
 .values h3 { margin: 72px 0 12px; font-size: clamp(1.7rem, 3vw, 3rem); letter-spacing: -.05em; }
 .values p { color: var(--muted); font-size: .9rem; }
 
+.about-us-portrait { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: clamp(36px, 6vw, 100px); align-items: center; }
+.about-us-portrait figure { position: relative; margin: 0; overflow: hidden; background: #deddd7; }
+.about-us-portrait img { display: block; width: 100%; height: auto; }
+.about-us-portrait figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; padding: 50px 18px 16px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.58)); font-size: .62rem; font-weight: 600; letter-spacing: .12em; }
+.about-us-portrait h2 { margin: 18px 0 28px; font-size: clamp(2.1rem, 3.5vw, 4rem); line-height: 1.28; letter-spacing: -.06em; }
+.about-us-portrait > div > p:last-child { margin: 0; color: var(--muted); line-height: 1.9; word-break: keep-all; }
+
 .mvc-statements { display: grid; grid-template-columns: .84fr 1.16fr; gap: 18px; }
 .mvc-statement { min-height: 500px; padding: clamp(28px, 3vw, 52px); display: flex; flex-direction: column; }
 .mvc-mission { background: var(--accent); }
@@ -173,6 +180,7 @@ button, input, textarea { font: inherit; }
   .page-hero { grid-template-columns: 60px 1fr; }
   .page-hero > p { grid-column: 2; }
   .about-layout { grid-template-columns: 1fr; }
+  .about-us-portrait { grid-template-columns: 1fr; }
   .mvc-statements { grid-template-columns: 1fr; }
   .mvc-statement { min-height: 420px; }
   .core-value-list li { grid-template-columns: 60px minmax(150px, .5fr) 1.5fr; gap: 24px; }
@@ -215,6 +223,8 @@ button, input, textarea { font: inherit; }
   .values { grid-template-columns: 1fr; }
   .values article { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--line); }
   .values h3 { margin-top: 48px; }
+  .about-us-portrait { gap: 30px; }
+  .about-us-portrait figcaption { padding: 40px 12px 12px; font-size: .52rem; }
   .mvc-statements { gap: 12px; }
   .mvc-statement { min-height: 390px; padding: 24px 20px; }
   .mvc-statement h2 { font-size: clamp(2.15rem, 10vw, 3.3rem); }

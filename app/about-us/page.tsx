@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero, SiteFrame } from "@/app/components/site-chrome";
 
 export const metadata: Metadata = {
@@ -49,6 +50,18 @@ export default function AboutUsPage() {
           title="ABOUT US"
           description="REMO가 같은 방향으로 움직이기 위해 함께 세운 약속입니다. 우리가 존재하는 이유와 도달할 모습, 일하는 방식을 소개합니다."
         />
+
+        <section className="about-us-portrait section-space" aria-label="REMO 팀 소개">
+          <figure>
+            <Image src="/assets/remo-team.jpg" alt="LEINN Seoul에서 함께한 REMO 팀 단체 사진" width={1170} height={870} priority sizes="(max-width: 800px) 100vw, 92vw" />
+            <figcaption><span>TOGETHER, WE ARE REMO</span><span>LEINN SEOUL · YEAR 02</span></figcaption>
+          </figure>
+          <div>
+            <p className="eyebrow">WHO WE ARE</p>
+            <h2>다른 시선이 모일 때<br />더 좋은 답이 나옵니다.</h2>
+            <p>REMO는 열 명의 구성원이 함께 배우고, 실험하고, 결과를 만드는 팀입니다. 각자의 관점과 경험을 연결해 우리의 가능성을 넓혀갑니다.</p>
+          </div>
+        </section>
 
         <section className="mvc-statements section-space" aria-label="미션과 비전">
           <article className="mvc-statement mvc-mission">
