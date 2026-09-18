@@ -31,7 +31,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <Link className="site-logo" href="/">REMO<span>✳</span></Link>
-      <p>서로 다른 우리가 모여, REMO가 됩니다.</p>
+      <p>서로 다른 우리가 모여 REMO가 됩니다.</p>
       <div><Link href="/admin">관리자</Link><span>© 2026 TEAM REMO</span></div>
     </footer>
   );

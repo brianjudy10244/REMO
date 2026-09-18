@@ -48,7 +48,7 @@ export default function AboutUsPage() {
           index="04"
           eyebrow="MISSION · VISION · CORE VALUE"
           title="ABOUT US"
-          description="REMO가 같은 방향으로 움직이기 위해 함께 세운 약속입니다. 우리가 존재하는 이유와 도달할 모습, 일하는 방식을 소개합니다."
+          description="REMO가 같은 방향으로 움직이려고 함께 세운 약속입니다. 우리가 존재하는 이유, 도달할 모습, 일하는 방식을 여기에 담았습니다."
         />
 
         <section className="about-us-portrait section-space" aria-label="REMO 팀 소개">
@@ -59,7 +59,7 @@ export default function AboutUsPage() {
           <div>
             <p className="eyebrow">WHO WE ARE</p>
             <h2>다른 시선이 모일 때<br />더 좋은 답이 나옵니다.</h2>
-            <p>REMO는 열 명의 구성원이 함께 배우고, 실험하고, 결과를 만드는 팀입니다. 각자의 관점과 경험을 연결해 우리의 가능성을 넓혀갑니다.</p>
+            <p>REMO는 열 명의 구성원이 함께 배우고 실험하며 결과를 만드는 팀입니다. 각자의 관점과 경험을 연결해 우리의 가능성을 넓혀갑니다.</p>
           </div>
         </section>
 

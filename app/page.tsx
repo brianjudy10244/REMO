@@ -34,7 +34,7 @@ export default function HomePage() {
           </figure>
 
           <div className="landing-aside">
-            <p>서로 다른 우리가 모여<br />하나의 장면을 만듭니다.</p>
+            <p>서로 다른 우리가 모여<br />한 장면을 만듭니다.</p>
             <Link className="landing-enter" href="/about-us">
               ABOUT US 보기 <span aria-hidden="true">↗</span>
             </Link>

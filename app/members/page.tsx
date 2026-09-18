@@ -10,7 +10,7 @@ export default async function MembersPage() {
   return (
     <SiteFrame>
       <main>
-        <PageHero index="03" eyebrow="OUR PEOPLE" title="REMO라는 우리" description="서로 다른 장점과 생각을 가진 열 명이 한 팀으로 움직입니다. REMO를 만드는 사람들을 소개합니다." />
+        <PageHero index="03" eyebrow="OUR PEOPLE" title="REMO라는 우리" description="장점도 생각도 서로 다른 열 명이 한 팀으로 움직입니다. REMO를 함께 만드는 사람들입니다." />
         <section className="members-zigzag section-space" aria-label="REMO 멤버 목록">
           {members.map((member, index) => (
             <article className="member-zigzag" key={member.id}>
