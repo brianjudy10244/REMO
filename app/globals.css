@@ -175,6 +175,17 @@ button, input, textarea { font: inherit; }
 .board-composer button:hover { background: var(--accent); }
 .board-composer button:disabled { opacity: .55; cursor: wait; }
 .board-error { margin: 0; color: #a52316; font-size: .76rem; line-height: 1.6; }
+.board-admin-note { margin: -8px 0 18px; color: var(--muted); font-size: .72rem; line-height: 1.7; }
+.board-admin-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.board-post-actions { display: flex; gap: 8px; margin-top: 20px; }
+.board-post-actions button, .board-edit-form button { min-height: 34px; padding: 0 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: .68rem; font-weight: 700; cursor: pointer; }
+.board-post-actions button:hover, .board-edit-form button:hover { border-color: var(--ink); }
+.board-edit-form { display: grid; gap: 14px; margin-top: 20px; padding: 20px; background: #e7e5dd; }
+.board-edit-form label { display: grid; gap: 7px; font-size: .72rem; font-weight: 700; }
+.board-edit-form input, .board-edit-form textarea { width: 100%; border: 1px solid #bcbab1; border-radius: 0; outline: 0; padding: 10px 12px; background: var(--paper); color: var(--ink); font: inherit; font-size: .8rem; font-weight: 400; }
+.board-edit-form input:focus, .board-edit-form textarea:focus { border-color: var(--accent); }
+.board-edit-form textarea { resize: vertical; line-height: 1.7; }
+.board-edit-form > div { display: flex; gap: 8px; }
 
 .site-footer { min-height: 150px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; gap: 30px; border-top: 1px solid var(--ink); }
 .site-footer > p { margin: 0; text-align: center; color: var(--muted); font-size: .85rem; }

@@ -6,6 +6,7 @@
 
 - 홈페이지: /
 - 팀 게시판: /board (글은 Neon `board_posts` 테이블에 저장)
+- 게시글 수정·삭제: 관리자 로그인 후 게시판에서 관리 가능
 - 관리자 대시보드: /admin/
 - 프로젝트: /admin/#projects
 - 구성원: /admin/#members

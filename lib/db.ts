@@ -113,8 +113,10 @@ async function ensureBoardTable() {
       title TEXT NOT NULL,
       author TEXT NOT NULL DEFAULT '익명',
       content TEXT NOT NULL,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )`.then(async () => {
+      await query`ALTER TABLE board_posts ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`;
       await query`CREATE INDEX IF NOT EXISTS board_posts_created_at_idx ON board_posts (created_at DESC)`;
     }).then(() => undefined).catch((error) => {
       boardTableReady = null;
@@ -146,4 +148,18 @@ export async function createBoardPost(data: { title: string; author: string; con
   await ensureBoardTable();
   const rows = await query`INSERT INTO board_posts (title, author, content) VALUES (${data.title}, ${data.author}, ${data.content}) RETURNING id, title, author, content, created_at`;
   return boardPost(rows[0]);
+}
+
+export async function updateBoardPost(id: string, data: { title: string; author: string; content: string }): Promise<BoardPost | null> {
+  const query = sql();
+  await ensureBoardTable();
+  const rows = await query`UPDATE board_posts SET title=${data.title}, author=${data.author}, content=${data.content}, updated_at=NOW() WHERE id=${id} RETURNING id, title, author, content, created_at`;
+  return rows[0] ? boardPost(rows[0]) : null;
+}
+
+export async function deleteBoardPost(id: string): Promise<boolean> {
+  const query = sql();
+  await ensureBoardTable();
+  const rows = await query`DELETE FROM board_posts WHERE id=${id} RETURNING id`;
+  return Boolean(rows[0]);
 }
