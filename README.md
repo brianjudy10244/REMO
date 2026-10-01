@@ -5,6 +5,7 @@
 ## 화면
 
 - 홈페이지: /
+- 팀 게시판: /board (글은 Neon `board_posts` 테이블에 저장)
 - 관리자 대시보드: /admin/
 - 프로젝트: /admin/#projects
 - 구성원: /admin/#members

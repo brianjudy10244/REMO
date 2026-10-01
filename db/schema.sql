@@ -37,5 +37,14 @@ CREATE TABLE IF NOT EXISTS assets (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS board_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  author TEXT NOT NULL DEFAULT '익명',
+  content TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE INDEX IF NOT EXISTS projects_position_idx ON projects (position);
 CREATE INDEX IF NOT EXISTS members_position_idx ON members (position);
+CREATE INDEX IF NOT EXISTS board_posts_created_at_idx ON board_posts (created_at DESC);

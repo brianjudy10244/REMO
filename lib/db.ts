@@ -3,6 +3,7 @@ import { requiredEnv } from "@/lib/env";
 import type { Asset, Item, SiteData, SiteSettings } from "@/lib/types";
 
 const sql = () => neon(requiredEnv("DATABASE_URL"));
+let boardTableReady: Promise<void> | null = null;
 
 const settingsDefaults: SiteSettings = {
   teamName: "REMO",
@@ -94,4 +95,55 @@ export async function deleteAssetRecord(id: string) {
   const rows = await query`DELETE FROM assets WHERE id=${id} RETURNING url`;
   if (!rows[0]) throw new Error("Asset was not found.");
   return String(rows[0].url);
+}
+
+export type BoardPost = {
+  id: string;
+  title: string;
+  author: string;
+  content: string;
+  createdAt: string;
+};
+
+async function ensureBoardTable() {
+  if (!boardTableReady) {
+    const query = sql();
+    boardTableReady = query`CREATE TABLE IF NOT EXISTS board_posts (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      title TEXT NOT NULL,
+      author TEXT NOT NULL DEFAULT '익명',
+      content TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`.then(async () => {
+      await query`CREATE INDEX IF NOT EXISTS board_posts_created_at_idx ON board_posts (created_at DESC)`;
+    }).then(() => undefined).catch((error) => {
+      boardTableReady = null;
+      throw error;
+    });
+  }
+  await boardTableReady;
+}
+
+function boardPost(row: Record<string, unknown>): BoardPost {
+  return {
+    id: String(row.id),
+    title: String(row.title),
+    author: String(row.author),
+    content: String(row.content),
+    createdAt: new Date(String(row.created_at)).toISOString(),
+  };
+}
+
+export async function getBoardPosts(): Promise<BoardPost[]> {
+  const query = sql();
+  await ensureBoardTable();
+  const rows = await query`SELECT id, title, author, content, created_at FROM board_posts ORDER BY created_at DESC LIMIT 100`;
+  return rows.map(boardPost);
+}
+
+export async function createBoardPost(data: { title: string; author: string; content: string }): Promise<BoardPost> {
+  const query = sql();
+  await ensureBoardTable();
+  const rows = await query`INSERT INTO board_posts (title, author, content) VALUES (${data.title}, ${data.author}, ${data.content}) RETURNING id, title, author, content, created_at`;
+  return boardPost(rows[0]);
 }

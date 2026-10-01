@@ -153,6 +153,29 @@ button, input, textarea { font: inherit; }
 .member-zigzag p { margin: 18px 0 0; color: var(--muted); font-size: .64rem; letter-spacing: .13em; }
 .member-direction { flex: 0 0 auto; color: var(--accent); font-size: clamp(1.5rem, 2.6vw, 3rem); font-weight: 300; }
 
+.board-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); gap: clamp(40px, 7vw, 112px); align-items: start; }
+.board-list-heading { display: flex; justify-content: space-between; align-items: center; padding: 0 0 18px; border-bottom: 1px solid var(--ink); }
+.board-list-heading > span { color: var(--muted); font-size: .64rem; letter-spacing: .12em; }
+.board-post { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.board-post-number { padding-top: 8px; color: var(--accent); font-size: .7rem; letter-spacing: .12em; }
+.board-post h2 { margin: 0; font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -.045em; }
+.board-post-meta { margin: 9px 0 0; color: var(--muted); font-size: .7rem; }
+.board-post-meta span { padding: 0 5px; color: var(--accent); }
+.board-post-content { margin: 18px 0 0; color: #4f4f49; line-height: 1.85; white-space: pre-wrap; word-break: break-word; }
+.board-empty { padding: 38px 0; color: var(--muted); line-height: 1.9; }
+.board-write { padding: 30px; background: #e7e5dd; }
+.board-write h2 { margin: 18px 0 28px; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.25; letter-spacing: -.06em; }
+.board-composer { display: grid; gap: 18px; }
+.board-composer label { display: grid; gap: 8px; font-size: .76rem; font-weight: 700; }
+.board-composer label span { display: inline; color: var(--muted); font-size: .65rem; font-weight: 400; }
+.board-composer input, .board-composer textarea { width: 100%; border: 1px solid #bcbab1; border-radius: 0; outline: 0; padding: 12px 13px; background: var(--paper); color: var(--ink); font-size: .82rem; font-weight: 400; }
+.board-composer input:focus, .board-composer textarea:focus { border-color: var(--accent); }
+.board-composer textarea { resize: vertical; line-height: 1.7; }
+.board-composer button { min-height: 48px; border: 0; background: var(--ink); color: #fff; font-size: .78rem; font-weight: 700; cursor: pointer; }
+.board-composer button:hover { background: var(--accent); }
+.board-composer button:disabled { opacity: .55; cursor: wait; }
+.board-error { margin: 0; color: #a52316; font-size: .76rem; line-height: 1.6; }
+
 .site-footer { min-height: 150px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; gap: 30px; border-top: 1px solid var(--ink); }
 .site-footer > p { margin: 0; text-align: center; color: var(--muted); font-size: .85rem; }
 .site-footer > div { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 7px; font-size: .68rem; color: var(--muted); }
@@ -187,6 +210,7 @@ button, input, textarea { font: inherit; }
   .project-row { grid-template-columns: 80px 1fr 50px; }
   .project-row > p { display: none; }
   .member-zigzag { width: 72%; }
+  .board-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -242,6 +266,7 @@ button, input, textarea { font: inherit; }
   .member-zigzag h2 { font-size: clamp(3.8rem, 20vw, 6rem); }
   .member-zigzag p { margin-top: 12px; font-size: .55rem; }
   .member-direction { font-size: 1.35rem; }
+  .board-write { padding: 24px 18px; }
   .site-footer { min-height: 180px; grid-template-columns: 1fr 1fr; }
   .site-footer > p { display: none; }
 }

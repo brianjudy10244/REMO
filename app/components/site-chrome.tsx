@@ -9,6 +9,7 @@ const navItems = [
   { href: "/about-us", label: "ABOUT US" },
   { href: "/projects", label: "프로젝트" },
   { href: "/members", label: "멤버" },
+  { href: "/board", label: "게시판" },
 ];
 
 export function SiteHeader() {
