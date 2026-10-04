@@ -7,6 +7,7 @@ import type { BoardPost } from "@/lib/db";
 export function BoardPostActions({ post }: { post: BoardPost }) {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,7 +38,6 @@ export function BoardPostActions({ post }: { post: BoardPost }) {
   }
 
   async function remove() {
-    if (!window.confirm("이 게시글을 삭제할까요? 삭제한 글은 복구할 수 없습니다.")) return;
     setBusy(true);
     setError("");
     try {
@@ -51,12 +51,23 @@ export function BoardPostActions({ post }: { post: BoardPost }) {
     }
   }
 
+  if (confirmingDelete) {
+    return <div className="board-delete-confirm" role="alertdialog" aria-labelledby={`delete-${post.id}`}>
+      <p id={`delete-${post.id}`}>이 글을 삭제할까요? 삭제한 글은 복구할 수 없습니다.</p>
+      {error && <p className="board-error" role="alert">{error}</p>}
+      <div>
+        <button type="button" disabled={busy} onClick={remove}>{busy ? "삭제 중…" : "삭제하기"}</button>
+        <button type="button" disabled={busy} onClick={() => { setConfirmingDelete(false); setError(""); }}>취소</button>
+      </div>
+    </div>;
+  }
+
   if (!editing) {
     return <details className="board-post-actions">
       <summary aria-label={`${post.title} 관리 메뉴`}>···</summary>
       <div className="board-post-menu">
         <button type="button" disabled={busy} onClick={() => setEditing(true)}>수정</button>
-        <button type="button" disabled={busy} onClick={remove}>삭제</button>
+        <button type="button" disabled={busy} onClick={() => setConfirmingDelete(true)}>삭제</button>
       </div>
       {error && <p className="board-error" role="alert">{error}</p>}
     </details>;
