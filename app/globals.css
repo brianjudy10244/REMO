@@ -143,15 +143,16 @@ button, input, textarea { font: inherit; }
 .project-row p { margin: 0; font-size: .68rem; line-height: 1.8; letter-spacing: .1em; }
 .row-arrow { justify-self: end; font-size: 2rem; }
 
-.members-zigzag { padding-top: clamp(64px, 8vw, 130px); }
-.member-zigzag { width: 62%; min-height: 210px; display: flex; align-items: center; gap: clamp(18px, 3vw, 48px); padding: clamp(26px, 3.5vw, 58px) 0; border-top: 1px solid var(--line); }
-.member-zigzag:nth-child(even) { margin-left: auto; flex-direction: row-reverse; text-align: right; }
-.member-zigzag:last-child { border-bottom: 1px solid var(--line); }
-.member-sequence { flex: 0 0 auto; align-self: flex-start; padding-top: .55em; color: var(--accent); font-size: .7rem; font-weight: 700; letter-spacing: .12em; }
-.member-zigzag > div { flex: 1; }
-.member-zigzag h2 { margin: 0; font-size: clamp(4.3rem, 8.5vw, 9.5rem); font-weight: 700; line-height: .86; letter-spacing: -.09em; }
-.member-zigzag p { margin: 18px 0 0; color: var(--muted); font-size: .64rem; letter-spacing: .13em; }
-.member-direction { flex: 0 0 auto; color: var(--accent); font-size: clamp(1.5rem, 2.6vw, 3rem); font-weight: 300; }
+.page-hero-members { min-height: 280px; padding-top: 54px; padding-bottom: 38px; }
+.members-zigzag { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(30px, 7vw, 100px); padding-top: 34px; }
+.member-zigzag { width: auto; min-width: 0; min-height: 132px; display: flex; align-items: center; gap: clamp(10px, 1.8vw, 24px); padding: 18px 0; border-top: 1px solid var(--line); }
+.member-zigzag:nth-child(even) { margin-left: 0; flex-direction: row-reverse; text-align: right; }
+.member-zigzag:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+.member-sequence { flex: 0 0 auto; align-self: flex-start; padding-top: .45em; color: var(--accent); font-size: .66rem; font-weight: 700; letter-spacing: .1em; }
+.member-zigzag > div { flex: 1; min-width: 0; }
+.member-zigzag h2 { margin: 0; font-size: clamp(2.2rem, 4vw, 4.8rem); font-weight: 700; line-height: .95; letter-spacing: -.075em; }
+.member-zigzag p { margin: 10px 0 0; color: var(--muted); font-size: .58rem; letter-spacing: .1em; }
+.member-direction { flex: 0 0 auto; color: var(--accent); font-size: clamp(1.1rem, 1.8vw, 1.7rem); font-weight: 300; }
 
 .board-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); gap: clamp(40px, 7vw, 112px); align-items: start; }
 .board-list-heading { display: flex; justify-content: space-between; align-items: center; padding: 0 0 18px; border-bottom: 1px solid var(--ink); }
@@ -220,7 +221,9 @@ button, input, textarea { font: inherit; }
   .core-value-list li { grid-template-columns: 60px minmax(150px, .5fr) 1.5fr; gap: 24px; }
   .project-row { grid-template-columns: 80px 1fr 50px; }
   .project-row > p { display: none; }
-  .member-zigzag { width: 72%; }
+  .page-hero-members { min-height: 250px; padding-top: 44px; padding-bottom: 30px; }
+  .members-zigzag { padding-top: 28px; }
+  .member-zigzag { min-height: 116px; }
   .board-layout { grid-template-columns: 1fr; }
 }
 
@@ -272,11 +275,14 @@ button, input, textarea { font: inherit; }
   .project-row { min-height: 210px; grid-template-columns: 56px 1fr 28px; padding: 22px 18px; gap: 12px; }
   .project-row h2 { font-size: clamp(2.5rem, 15vw, 4.6rem); }
   .row-arrow { font-size: 1.4rem; }
-  .members-zigzag { padding-top: 52px; }
-  .member-zigzag { width: 88%; min-height: 150px; gap: 14px; padding: 28px 0; }
-  .member-zigzag h2 { font-size: clamp(3.8rem, 20vw, 6rem); }
-  .member-zigzag p { margin-top: 12px; font-size: .55rem; }
-  .member-direction { font-size: 1.35rem; }
+  .page-hero-members { min-height: 0; padding: 38px 0 28px; }
+  .page-hero-members h1 { font-size: clamp(2.8rem, 12vw, 4.4rem); }
+  .members-zigzag { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; padding-top: 24px; }
+  .member-zigzag { min-height: 104px; gap: 7px; padding: 14px 0; }
+  .member-sequence { font-size: .56rem; }
+  .member-zigzag h2 { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+  .member-zigzag p { margin-top: 8px; font-size: .46rem; letter-spacing: .06em; }
+  .member-direction { font-size: 1rem; }
   .board-write { padding: 24px 18px; }
   .site-footer { min-height: 180px; grid-template-columns: 1fr 1fr; }
   .site-footer > p { display: none; }

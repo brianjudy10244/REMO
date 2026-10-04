@@ -42,9 +42,9 @@ export function SiteFrame({ children }: { children: ReactNode }) {
   return <div className="site-shell"><SiteHeader />{children}<SiteFooter /></div>;
 }
 
-export function PageHero({ index, eyebrow, title, description }: { index: string; eyebrow: string; title: string; description: string }) {
+export function PageHero({ index, eyebrow, title, description, className }: { index: string; eyebrow: string; title: string; description: string; className?: string }) {
   return (
-    <section className="page-hero">
+    <section className={`page-hero${className ? ` ${className}` : ""}`}>
       <span className="page-index">{index}</span>
       <div><p className="eyebrow">{eyebrow}</p><h1>{title}<span>.</span></h1></div>
       <p>{description}</p>
