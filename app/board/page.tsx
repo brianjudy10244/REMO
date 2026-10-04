@@ -33,7 +33,7 @@ export default async function BoardPage() {
           <aside className="board-write">
             <p className="eyebrow">WRITE A NOTE</p>
             <h2>팀에 남길<br />이야기가 있나요?</h2>
-            {!isAdmin && <p className="board-admin-note"><a href="/admin/login">관리자 로그인</a> 후 게시글을 수정하거나 삭제할 수 있습니다.</p>}
+            {!isAdmin && <p className="board-admin-note"><a href="/admin/login?next=%2Fboard">관리자 로그인</a> 후 게시글을 수정하거나 삭제할 수 있습니다.</p>}
             <BoardComposer />
           </aside>
         </section>

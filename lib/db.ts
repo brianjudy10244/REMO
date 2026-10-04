@@ -4,6 +4,7 @@ import type { Asset, Item, SiteData, SiteSettings } from "@/lib/types";
 
 const sql = () => neon(requiredEnv("DATABASE_URL"));
 let boardTableReady: Promise<void> | null = null;
+let contentTablesReady: Promise<void> | null = null;
 
 const settingsDefaults: SiteSettings = {
   teamName: "REMO",
@@ -12,6 +13,83 @@ const settingsDefaults: SiteSettings = {
   description: "레인서울에서 함께하는 두 번째 해.\n우리의 이름으로, 우리의 프로젝트를 만듭니다.",
   heroAssetUrl: null,
 };
+
+function defaultSiteData(): SiteData {
+  return {
+    settings: settingsDefaults,
+    projects: ["무디즘", "PLN", "데이터플로우", "노웨사"].map((name, i) => ({ id: `demo-p-${i}`, name, position: i + 1, isVisible: true })),
+    members: ["유진", "정우", "브루노", "이든", "막스", "조이", "로", "겸", "쏠", "비크"].map((name, i) => ({ id: `demo-m-${i}`, name, position: i + 1, isVisible: true })),
+    assets: [],
+  };
+}
+
+async function ensureContentTables() {
+  if (!contentTablesReady) {
+    const query = sql();
+    contentTablesReady = (async () => {
+      const [existing] = await query`SELECT
+        to_regclass('public.site_settings') AS site_settings,
+        to_regclass('public.projects') AS projects,
+        to_regclass('public.members') AS members,
+        to_regclass('public.assets') AS assets`;
+
+      if (!existing.site_settings) {
+        await query`CREATE TABLE site_settings (
+          id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+          team_name TEXT NOT NULL DEFAULT 'REMO',
+          intro TEXT NOT NULL DEFAULT '레인서울 2년차',
+          headline TEXT NOT NULL DEFAULT '열 명의 시선,',
+          description TEXT NOT NULL DEFAULT '레인서울에서 함께하는 두 번째 해.' || chr(10) || '우리의 이름으로, 우리의 프로젝트를 만듭니다.',
+          hero_asset_url TEXT,
+          updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )`;
+        await query`INSERT INTO site_settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING`;
+      }
+      if (!existing.projects) {
+        await query`CREATE TABLE projects (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          name TEXT NOT NULL UNIQUE,
+          position INTEGER NOT NULL,
+          is_visible BOOLEAN NOT NULL DEFAULT TRUE,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+          updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )`;
+        for (const [position, name] of ["무디즘", "PLN", "데이터플로우", "노웨사"].entries()) {
+          await query`INSERT INTO projects (name, position) VALUES (${name}, ${position + 1}) ON CONFLICT (name) DO NOTHING`;
+        }
+      }
+      if (!existing.members) {
+        await query`CREATE TABLE members (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          name TEXT NOT NULL UNIQUE,
+          position INTEGER NOT NULL,
+          is_visible BOOLEAN NOT NULL DEFAULT TRUE,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+          updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )`;
+        for (const [position, name] of ["유진", "정우", "브루노", "이든", "막스", "조이", "로", "겸", "쏠", "비크"].entries()) {
+          await query`INSERT INTO members (name, position) VALUES (${name}, ${position + 1}) ON CONFLICT (name) DO NOTHING`;
+        }
+      }
+      if (!existing.assets) {
+        await query`CREATE TABLE assets (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          name TEXT NOT NULL,
+          url TEXT NOT NULL UNIQUE,
+          content_type TEXT NOT NULL,
+          size_bytes BIGINT NOT NULL,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )`;
+      }
+      await query`CREATE INDEX IF NOT EXISTS projects_position_idx ON projects (position)`;
+      await query`CREATE INDEX IF NOT EXISTS members_position_idx ON members (position)`;
+    })().then(() => undefined).catch((error) => {
+      contentTablesReady = null;
+      throw error;
+    });
+  }
+  await contentTablesReady;
+}
 
 function item(row: Record<string, unknown>): Item {
   return { id: String(row.id), name: String(row.name), position: Number(row.position), isVisible: Boolean(row.is_visible) };
@@ -22,19 +100,24 @@ function asset(row: Record<string, unknown>): Asset {
 }
 
 export async function getSiteData(includeHidden = false): Promise<SiteData> {
-  if (!process.env.DATABASE_URL) {
-    return { settings: settingsDefaults, projects: ["무디즘", "PLN", "데이터플로우", "노웨사"].map((name, i) => ({ id: `demo-p-${i}`, name, position: i + 1, isVisible: true })), members: ["유진", "정우", "브루노", "이든", "막스", "조이", "로", "겸", "쏠", "비크"].map((name, i) => ({ id: `demo-m-${i}`, name, position: i + 1, isVisible: true })), assets: [] };
+  if (!process.env.DATABASE_URL) return defaultSiteData();
+  try {
+    await ensureContentTables();
+    const query = sql();
+    const [settingsRows, projectRows, memberRows, assetRows] = await Promise.all([
+      query`SELECT team_name, intro, headline, description, hero_asset_url FROM site_settings WHERE id = 1`,
+      includeHidden ? query`SELECT id, name, position, is_visible FROM projects ORDER BY position` : query`SELECT id, name, position, is_visible FROM projects WHERE is_visible = TRUE ORDER BY position`,
+      includeHidden ? query`SELECT id, name, position, is_visible FROM members ORDER BY position` : query`SELECT id, name, position, is_visible FROM members WHERE is_visible = TRUE ORDER BY position`,
+      includeHidden ? query`SELECT id, name, url, content_type, size_bytes, created_at FROM assets ORDER BY created_at DESC` : Promise.resolve([]),
+    ]);
+    const row = settingsRows[0];
+    const settings = row ? { teamName: String(row.team_name), intro: String(row.intro), headline: String(row.headline), description: String(row.description), heroAssetUrl: row.hero_asset_url ? String(row.hero_asset_url) : null } : settingsDefaults;
+    return { settings, projects: projectRows.map(item), members: memberRows.map(item), assets: assetRows.map(asset) };
+  } catch (error) {
+    console.error("Failed to load site content from Neon", error);
+    if (includeHidden) throw error;
+    return defaultSiteData();
   }
-  const query = sql();
-  const [settingsRows, projectRows, memberRows, assetRows] = await Promise.all([
-    query`SELECT team_name, intro, headline, description, hero_asset_url FROM site_settings WHERE id = 1`,
-    includeHidden ? query`SELECT id, name, position, is_visible FROM projects ORDER BY position` : query`SELECT id, name, position, is_visible FROM projects WHERE is_visible = TRUE ORDER BY position`,
-    includeHidden ? query`SELECT id, name, position, is_visible FROM members ORDER BY position` : query`SELECT id, name, position, is_visible FROM members WHERE is_visible = TRUE ORDER BY position`,
-    includeHidden ? query`SELECT id, name, url, content_type, size_bytes, created_at FROM assets ORDER BY created_at DESC` : Promise.resolve([]),
-  ]);
-  const row = settingsRows[0];
-  const settings = row ? { teamName: String(row.team_name), intro: String(row.intro), headline: String(row.headline), description: String(row.description), heroAssetUrl: row.hero_asset_url ? String(row.hero_asset_url) : null } : settingsDefaults;
-  return { settings, projects: projectRows.map(item), members: memberRows.map(item), assets: assetRows.map(asset) };
 }
 
 export async function updateSettings(data: SiteSettings) {
