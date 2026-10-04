@@ -15,7 +15,7 @@ export default function LoginPage() {
 
     if (response.ok) {
       const requestedPath = new URLSearchParams(location.search).get("next");
-      const nextPath = requestedPath?.startsWith("/") && !requestedPath.startsWith("//") ? requestedPath : "/admin";
+      const nextPath = requestedPath === "/board" ? "/board" : "/admin";
       location.href = nextPath;
     } else {
       setError("관리자 ID 또는 비밀번호를 확인해주세요.");
