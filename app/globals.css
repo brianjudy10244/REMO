@@ -158,6 +158,8 @@ button, input, textarea { font: inherit; }
 .board-list-heading { display: flex; justify-content: space-between; align-items: center; padding: 0 0 18px; border-bottom: 1px solid var(--ink); }
 .board-list-heading > span { color: var(--muted); font-size: .64rem; letter-spacing: .12em; }
 .board-post { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.board-post-body { position: relative; min-width: 0; }
+.board-post-body:has(.board-post-actions) h2 { padding-right: 48px; }
 .board-post-number { padding-top: 8px; color: var(--accent); font-size: .7rem; letter-spacing: .12em; }
 .board-post h2 { margin: 0; font-size: clamp(1.25rem, 2vw, 1.8rem); letter-spacing: -.045em; }
 .board-post-meta { margin: 9px 0 0; color: var(--muted); font-size: .7rem; }
@@ -178,15 +180,21 @@ button, input, textarea { font: inherit; }
 .board-error { margin: 0; color: #a52316; font-size: .76rem; line-height: 1.6; }
 .board-admin-note { margin: -8px 0 18px; color: var(--muted); font-size: .72rem; line-height: 1.7; }
 .board-admin-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.board-post-actions { display: flex; gap: 8px; margin-top: 20px; }
-.board-post-actions button, .board-edit-form button { min-height: 34px; padding: 0 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: .68rem; font-weight: 700; cursor: pointer; }
-.board-post-actions button:hover, .board-edit-form button:hover { border-color: var(--ink); }
+.board-post-actions { position: absolute; top: -4px; right: 0; z-index: 2; }
+.board-post-actions summary { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); color: var(--ink); font-size: 1.25rem; line-height: 1; letter-spacing: .08em; list-style: none; cursor: pointer; }
+.board-post-actions summary::-webkit-details-marker { display: none; }
+.board-post-actions summary:hover, .board-post-actions[open] summary { border-color: var(--ink); }
+.board-post-menu { position: absolute; top: 42px; right: 0; display: grid; width: 116px; padding: 5px; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 10px 24px #1818181c; }
+.board-post-menu button, .board-edit-form button { min-height: 34px; padding: 0 12px; border: 0; background: transparent; color: var(--ink); font-size: .68rem; font-weight: 700; cursor: pointer; text-align: left; }
+.board-post-menu button:hover, .board-edit-form button:hover { background: #e7e5dd; }
+.board-post-actions .board-error { position: absolute; top: 44px; right: 124px; width: 220px; padding: 6px; background: var(--paper); }
 .board-edit-form { display: grid; gap: 14px; margin-top: 20px; padding: 20px; background: #e7e5dd; }
 .board-edit-form label { display: grid; gap: 7px; font-size: .72rem; font-weight: 700; }
 .board-edit-form input, .board-edit-form textarea { width: 100%; border: 1px solid #bcbab1; border-radius: 0; outline: 0; padding: 10px 12px; background: var(--paper); color: var(--ink); font: inherit; font-size: .8rem; font-weight: 400; }
 .board-edit-form input:focus, .board-edit-form textarea:focus { border-color: var(--accent); }
 .board-edit-form textarea { resize: vertical; line-height: 1.7; }
 .board-edit-form > div { display: flex; gap: 8px; }
+.board-edit-form > div button { border: 1px solid var(--line); }
 
 .site-footer { min-height: 150px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; gap: 30px; border-top: 1px solid var(--ink); }
 .site-footer > p { margin: 0; text-align: center; color: var(--muted); font-size: .85rem; }

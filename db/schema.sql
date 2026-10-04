@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS board_posts (
   title TEXT NOT NULL,
   author TEXT NOT NULL DEFAULT '익명',
   content TEXT NOT NULL,
+  owner_hash TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

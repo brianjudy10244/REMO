@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { PageHero, SiteFrame } from "@/app/components/site-chrome";
 import { getBoardPosts } from "@/lib/db";
 import { sessionCookie, verifySession } from "@/lib/auth";
+import { boardOwnerCookie, boardOwnerHash, isBoardOwnerToken } from "@/lib/board-owner";
 import { BoardComposer } from "./board-composer";
 import { BoardPostActions } from "./board-post-actions";
 
@@ -14,8 +15,13 @@ function dateLabel(value: string) {
 }
 
 export default async function BoardPage() {
-  const [posts, cookieStore] = await Promise.all([getBoardPosts(), cookies()]);
-  const isAdmin = await verifySession(cookieStore.get(sessionCookie)?.value);
+  const cookieStore = await cookies();
+  const token = cookieStore.get(boardOwnerCookie)?.value;
+  const ownerHash = isBoardOwnerToken(token) ? boardOwnerHash(token) : "";
+  const [posts, isAdmin] = await Promise.all([
+    getBoardPosts(ownerHash),
+    verifySession(cookieStore.get(sessionCookie)?.value),
+  ]);
   return (
     <SiteFrame>
       <main>
@@ -26,14 +32,14 @@ export default async function BoardPage() {
             {posts.length ? posts.map((post, index) => (
               <article className="board-post" key={post.id}>
                 <span className="board-post-number">{String(index + 1).padStart(2, "0")}</span>
-                <div><h2>{post.title}</h2><p className="board-post-meta">{post.author} <span>·</span> {dateLabel(post.createdAt)}</p><p className="board-post-content">{post.content}</p>{isAdmin && <BoardPostActions post={post} />}</div>
+                <div className="board-post-body"><h2>{post.title}</h2><p className="board-post-meta">{post.author} <span>·</span> {dateLabel(post.createdAt)}</p><p className="board-post-content">{post.content}</p>{(isAdmin || post.canEdit) && <BoardPostActions post={post} />}</div>
               </article>
             )) : <p className="board-empty">아직 등록된 글이 없습니다.<br />첫 이야기를 남겨 주세요.</p>}
           </div>
           <aside className="board-write">
             <p className="eyebrow">WRITE A NOTE</p>
             <h2>팀에 남길<br />이야기가 있나요?</h2>
-            {!isAdmin && <p className="board-admin-note"><a href="/admin/login?next=%2Fboard">관리자 로그인</a> 후 게시글을 수정하거나 삭제할 수 있습니다.</p>}
+            <p className="board-admin-note">이 브라우저에서 쓴 글은 글 옆의 ··· 메뉴에서 수정하거나 삭제할 수 있습니다. 브라우저 데이터를 지우면 수정 권한도 사라집니다.</p>
             <BoardComposer />
           </aside>
         </section>

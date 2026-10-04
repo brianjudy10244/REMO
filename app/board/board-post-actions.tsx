@@ -52,11 +52,14 @@ export function BoardPostActions({ post }: { post: BoardPost }) {
   }
 
   if (!editing) {
-    return <div className="board-post-actions">
-      <button type="button" disabled={busy} onClick={() => setEditing(true)}>수정</button>
-      <button type="button" disabled={busy} onClick={remove}>삭제</button>
+    return <details className="board-post-actions">
+      <summary aria-label={`${post.title} 관리 메뉴`}>···</summary>
+      <div className="board-post-menu">
+        <button type="button" disabled={busy} onClick={() => setEditing(true)}>수정</button>
+        <button type="button" disabled={busy} onClick={remove}>삭제</button>
+      </div>
       {error && <p className="board-error" role="alert">{error}</p>}
-    </div>;
+    </details>;
   }
 
   return <form className="board-edit-form" onSubmit={save}>
