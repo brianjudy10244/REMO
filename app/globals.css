@@ -353,3 +353,50 @@ button, input, textarea { font: inherit; }
   .project-detail-pagination > .text-link { font-size: .72rem; }
 }
 
+
+
+/* Shared typography scale for the public site. */
+:root {
+  --type-page: clamp(2rem, 6vw, 5.5rem);
+  --type-section: clamp(1.6rem, 3.2vw, 2.75rem);
+  --type-lead: clamp(1.125rem, 1.8vw, 1.5rem);
+  --type-body: 1rem;
+  --type-ui: .875rem;
+  --type-meta: .75rem;
+}
+.site-shell { font-size: var(--type-body); }
+.page-hero h1, .project-detail-hero h1, .project-row h2 { font-size: var(--type-page); line-height: 1.12; word-break: keep-all; }
+.section-heading h2, .about-us-portrait h2, .mvc-statement h2,
+.core-values-heading h2, .core-value-name h3, .project-detail-section h2,
+.member-zigzag h2, .board-write h2 { font-size: var(--type-section); line-height: 1.4; word-break: keep-all; }
+.landing-aside p, .project-detail-lead, .board-post h2 { font-size: var(--type-lead); line-height: 1.7; }
+.page-hero > p, .about-us-portrait > div > p:last-child, .core-value-list li > p,
+.core-values-heading > p, .board-post-content, .board-empty,
+.project-pending, .project-archive-empty p, .project-activity-list { font-size: var(--type-body); line-height: 1.85; }
+.site-nav, .text-link, .landing-enter, .button, .vision-target p,
+.project-section-nav, .project-detail-pagination > .text-link,
+.board-composer label, .board-composer input, .board-composer textarea,
+.board-composer button, .board-edit-form label, .board-edit-form input,
+.board-edit-form textarea, .board-edit-form button, .board-post-menu button,
+.board-delete-confirm p, .board-delete-confirm button,
+.site-footer > p { font-size: var(--type-ui); }
+.header-meta, .eyebrow, .page-index, .mvc-label, .mvc-statement > p,
+.vision-target > span, .vision-target em, .core-value-number, .core-value-name small,
+.project-row > div, .project-row p, .project-detail-topline, .project-detail-bottomline,
+.project-detail-section .eyebrow, .project-breadcrumb, .project-next > span,
+.project-detail-gallery figcaption, .member-sequence, .member-zigzag p,
+.board-list-heading > span, .board-post-number, .board-post-meta,
+.board-composer label span, .board-error, .board-admin-note, .site-footer > div,
+.landing-photo figcaption, .about-us-portrait figcaption, .landing-edition { font-size: var(--type-meta); }
+.member-zigzag p { letter-spacing: .04em; line-height: 1.6; }
+.project-next strong { font-size: var(--type-lead); }
+@media (max-width: 640px) {
+  :root {
+    --type-page: clamp(1.75rem, 8vw, 2.75rem);
+    --type-section: clamp(1.5rem, 6.5vw, 2rem);
+    --type-meta: .625rem;
+  }
+  .site-nav, .project-section-nav { font-size: var(--type-meta); }
+  .project-row h2 { letter-spacing: -.055em; }
+  .member-zigzag { align-items: center; }
+}
