@@ -7,10 +7,12 @@ export function BoardComposer() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState("");
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setSuccess("");
     setSaving(true);
 
     const form = event.currentTarget;
@@ -18,6 +20,7 @@ export function BoardComposer() {
     try {
       const response = await fetch("/api/board", {
         method: "POST",
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: formData.get("title"),
@@ -27,7 +30,9 @@ export function BoardComposer() {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "게시글을 저장하지 못했습니다.");
+      window.dispatchEvent(new CustomEvent("remo-board-changed", { detail: { post: result.post } }));
       form.reset();
+      setSuccess("글을 등록했습니다. 글 옆의 ··· 메뉴에서 수정하거나 삭제할 수 있습니다.");
       router.refresh();
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "게시글을 저장하지 못했습니다.");
@@ -51,6 +56,7 @@ export function BoardComposer() {
         <textarea name="content" required maxLength={10000} rows={5} placeholder="팀과 나누고 싶은 이야기를 적어 주세요" />
       </label>
       {error && <p className="board-error" role="alert">{error}</p>}
+      {success && <p className="board-admin-note" role="status">{success}</p>}
       <button type="submit" disabled={saving}>{saving ? "저장 중…" : "글 등록하기 ↗"}</button>
     </form>
   );

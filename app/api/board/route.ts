@@ -15,7 +15,7 @@ const postSchema = z.object({
 export async function GET() {
   try {
     const token = (await cookies()).get(boardOwnerCookie)?.value;
-    return NextResponse.json({ posts: await getBoardPosts(isBoardOwnerToken(token) ? boardOwnerHash(token) : "") });
+    return NextResponse.json({ posts: await getBoardPosts(isBoardOwnerToken(token) ? boardOwnerHash(token) : "") }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     console.error("Failed to load board posts", error);
     return NextResponse.json({ error: "게시글을 불러오지 못했습니다." }, { status: 503 });
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const existingToken = (await cookies()).get(boardOwnerCookie)?.value;
     const token = isBoardOwnerToken(existingToken) ? existingToken : newBoardOwnerToken();
     const post = await createBoardPost(parsed.data, boardOwnerHash(token));
-    const response = NextResponse.json({ post }, { status: 201 });
+    const response = NextResponse.json({ post: { ...post, canEdit: true } }, { status: 201 });
     response.cookies.set(boardOwnerCookie, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

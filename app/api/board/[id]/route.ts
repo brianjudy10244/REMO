@@ -35,7 +35,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
   try {
     const post = await updateBoardPost(id, parsed.data, ownerHash, admin);
-    return post ? NextResponse.json({ post }) : NextResponse.json({ error: "이 글을 수정할 권한이 없습니다." }, { status: 403 });
+    return post ? NextResponse.json({ post: { ...post, canEdit: true } }) : NextResponse.json({ error: "이 글을 수정할 권한이 없습니다." }, { status: 403 });
   } catch (error) {
     console.error("Failed to update board post", error);
     return NextResponse.json({ error: "게시글을 수정하지 못했습니다." }, { status: 503 });
