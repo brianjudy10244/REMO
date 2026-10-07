@@ -111,17 +111,17 @@ button, input, textarea { font: inherit; }
 .about-us-portrait > div > p:last-child { margin: 0; color: var(--muted); line-height: 1.9; word-break: keep-all; }
 
 .mvc-statements { display: grid; grid-template-columns: .84fr 1.16fr; gap: 18px; }
-.mvc-statement { min-height: 500px; padding: clamp(28px, 3vw, 52px); display: flex; flex-direction: column; }
+.mvc-statement { min-width: 0; container-type: inline-size; min-height: 500px; padding: clamp(28px, 3vw, 52px); display: flex; flex-direction: column; }
 .mvc-mission { background: var(--accent); }
 .mvc-vision { background: #272923; color: #f4f3e6; }
 .mvc-label { display: flex; justify-content: space-between; gap: 30px; font-size: .68rem; font-weight: 700; letter-spacing: .12em; }
 .mvc-label p { margin: 0; }
-.mvc-statement h2 { margin: auto 0; font-size: clamp(2.2rem, 4.25vw, 5.3rem); font-weight: 500; line-height: 1.25; letter-spacing: -.07em; }
+.mvc-statement h2 { margin: auto 0; font-size: clamp(1.25rem, 9cqw, 4.5rem); font-weight: 500; line-height: 1.4; letter-spacing: -.055em; word-break: keep-all; overflow-wrap: normal; text-wrap: balance; }
 .mvc-statement h2 strong { font-weight: 800; }
 .mvc-statement > p { margin: 0; font-size: .72rem; letter-spacing: .08em; }
 .vision-target { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; padding-top: 20px; border-top: 1px solid rgba(244,243,230,.35); }
 .vision-target > span { font-size: .62rem; letter-spacing: .14em; }
-.vision-target p { margin: 0; font-size: clamp(.9rem, 1.4vw, 1.25rem); font-weight: 600; }
+.vision-target p { margin: 0; font-size: clamp(.9rem, 1.4vw, 1.25rem); font-weight: 600; word-break: keep-all; }
 .vision-target em { margin: 0 .6em; color: #c7d49b; font-size: .65em; font-style: normal; letter-spacing: .08em; }
 .core-values-section { padding-top: 20px; }
 .core-values-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; padding-bottom: 36px; }
@@ -279,7 +279,7 @@ button, input, textarea { font: inherit; }
   .about-us-portrait figcaption { padding: 40px 12px 12px; font-size: .52rem; }
   .mvc-statements { gap: 12px; }
   .mvc-statement { min-height: 390px; padding: 24px 20px; }
-  .mvc-statement h2 { font-size: clamp(2.15rem, 10vw, 3.3rem); }
+  .mvc-statement h2 { font-size: clamp(1.25rem, 9cqw, 3.3rem); }
   .vision-target { display: block; }
   .vision-target p { margin-top: 10px; line-height: 1.6; }
   .core-values-heading { display: block; }
