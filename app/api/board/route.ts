@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { z } from "zod";
 import { createBoardPost, getBoardPosts } from "@/lib/db";
-import { boardOwnerCookie, boardOwnerHash, isBoardOwnerToken, newBoardOwnerToken } from "@/lib/board-owner";
 
 export const runtime = "nodejs";
 
@@ -14,8 +12,7 @@ const postSchema = z.object({
 
 export async function GET() {
   try {
-    const token = (await cookies()).get(boardOwnerCookie)?.value;
-    return NextResponse.json({ posts: await getBoardPosts(isBoardOwnerToken(token) ? boardOwnerHash(token) : "") }, { headers: { "Cache-Control": "private, no-store" } });
+    return NextResponse.json({ posts: await getBoardPosts() }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Failed to load board posts", error);
     return NextResponse.json({ error: "게시글을 불러오지 못했습니다." }, { status: 503 });
@@ -36,18 +33,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const existingToken = (await cookies()).get(boardOwnerCookie)?.value;
-    const token = isBoardOwnerToken(existingToken) ? existingToken : newBoardOwnerToken();
-    const post = await createBoardPost(parsed.data, boardOwnerHash(token));
-    const response = NextResponse.json({ post: { ...post, canEdit: true } }, { status: 201 });
-    response.cookies.set(boardOwnerCookie, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365,
-    });
-    return response;
+    const post = await createBoardPost(parsed.data);
+    return NextResponse.json({ post }, { status: 201 });
   } catch (error) {
     console.error("Failed to save board post", error);
     return NextResponse.json({ error: "게시글을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요." }, { status: 503 });

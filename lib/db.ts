@@ -223,34 +223,34 @@ function boardPost(row: Record<string, unknown>): BoardPost {
   };
 }
 
-export async function getBoardPosts(ownerHash = ""): Promise<BoardPost[]> {
+export async function getBoardPosts(): Promise<BoardPost[]> {
   const query = sql();
   await ensureBoardTable();
   const rows = await query`SELECT id, title, author, content, created_at,
-    (owner_hash IS NOT NULL AND owner_hash = ${ownerHash}) AS can_edit
+    TRUE AS can_edit
     FROM board_posts ORDER BY created_at DESC LIMIT 100`;
   return rows.map(boardPost);
 }
 
-export async function createBoardPost(data: { title: string; author: string; content: string }, ownerHash: string): Promise<BoardPost> {
+export async function createBoardPost(data: { title: string; author: string; content: string }): Promise<BoardPost> {
   const query = sql();
   await ensureBoardTable();
-  const rows = await query`INSERT INTO board_posts (title, author, content, owner_hash) VALUES (${data.title}, ${data.author}, ${data.content}, ${ownerHash}) RETURNING id, title, author, content, created_at`;
+  const rows = await query`INSERT INTO board_posts (title, author, content) VALUES (${data.title}, ${data.author}, ${data.content}) RETURNING id, title, author, content, created_at, TRUE AS can_edit`;
   return boardPost(rows[0]);
 }
 
-export async function updateBoardPost(id: string, data: { title: string; author: string; content: string }, ownerHash: string, isAdmin: boolean): Promise<BoardPost | null> {
+export async function updateBoardPost(id: string, data: { title: string; author: string; content: string }): Promise<BoardPost | null> {
   const query = sql();
   await ensureBoardTable();
   const rows = await query`UPDATE board_posts SET title=${data.title}, author=${data.author}, content=${data.content}, updated_at=NOW()
-    WHERE id=${id} AND (${isAdmin} OR (owner_hash IS NOT NULL AND owner_hash=${ownerHash}))
-    RETURNING id, title, author, content, created_at`;
+    WHERE id=${id}
+    RETURNING id, title, author, content, created_at, TRUE AS can_edit`;
   return rows[0] ? boardPost(rows[0]) : null;
 }
 
-export async function deleteBoardPost(id: string, ownerHash: string, isAdmin: boolean): Promise<boolean> {
+export async function deleteBoardPost(id: string): Promise<boolean> {
   const query = sql();
   await ensureBoardTable();
-  const rows = await query`DELETE FROM board_posts WHERE id=${id} AND (${isAdmin} OR (owner_hash IS NOT NULL AND owner_hash=${ownerHash})) RETURNING id`;
+  const rows = await query`DELETE FROM board_posts WHERE id=${id} RETURNING id`;
   return Boolean(rows[0]);
 }

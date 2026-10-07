@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import type { BoardPost } from "@/lib/db";
 
-export function BoardPostActions({ post, canManage }: { post: BoardPost; canManage: boolean }) {
+export function BoardPostActions({ post }: { post: BoardPost }) {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -68,8 +68,8 @@ export function BoardPostActions({ post, canManage }: { post: BoardPost; canMana
     return <details className="board-post-actions">
       <summary aria-label={`${post.title} 관리 메뉴`}>···</summary>
       <div className="board-post-menu">
-        <button type="button" disabled={busy} onClick={() => { if (canManage) setEditing(true); else setError("글을 작성한 브라우저에서 열어 주세요. 작성자 확인 정보가 없는 예전 글은 관리자에게 문의해 주세요."); }}>수정</button>
-        <button type="button" disabled={busy} onClick={() => { if (canManage) setConfirmingDelete(true); else setError("글을 작성한 브라우저에서 열어 주세요. 작성자 확인 정보가 없는 예전 글은 관리자에게 문의해 주세요."); }}>삭제</button>
+        <button type="button" disabled={busy} onClick={() => setEditing(true)}>수정</button>
+        <button type="button" disabled={busy} onClick={() => setConfirmingDelete(true)}>삭제</button>
       </div>
       {error && <p className="board-error" role="alert">{error}</p>}
     </details>;
