@@ -50,3 +50,12 @@ CREATE TABLE IF NOT EXISTS board_posts (
 CREATE INDEX IF NOT EXISTS projects_position_idx ON projects (position);
 CREATE INDEX IF NOT EXISTS members_position_idx ON members (position);
 CREATE INDEX IF NOT EXISTS board_posts_created_at_idx ON board_posts (created_at DESC);
+
+-- Anonymous StudySpace feature survey
+CREATE TABLE IF NOT EXISTS studyspace_survey_responses (
+ id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+ answers JSONB NOT NULL,
+ survey_version INTEGER NOT NULL DEFAULT 3,
+ created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS studyspace_survey_created_idx ON studyspace_survey_responses (created_at DESC);

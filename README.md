@@ -50,3 +50,9 @@ Vercel 프로젝트에 Neon Marketplace integration을 연결하고, private Blo
 - vercel.json: Vercel 정적 호스팅 설정
 
 원본 생성 이미지: ImageGen으로 만든 오렌지·크롬 조형물. 폰트: Google Fonts Noto Sans KR.
+
+## STUDYSPACE 랜딩페이지와 설문
+
+`/projects/studyspace`에 제품 이미지, 기능 구성, 공간별 세부 기능 설문을 통합했습니다. 제출된 익명 응답은 기존 `DATABASE_URL`의 Neon `studyspace_survey_responses` 테이블에 저장되며 첫 제출/조회 시 테이블을 준비합니다. 이름·이메일·IP는 저장하지 않습니다. `/admin/studyspace`에서 기존 REMO 관리자 로그인으로 통계, 상세 답변, 필터, CSV를 확인합니다. 추가 관리자 비밀번호는 필요 없습니다.
+
+설문 저장 후 나타나는 BMW 사진은 사용자가 제공한 이미지이며 가상 선물 연출입니다. 실제 차량 지급이나 당첨을 의미하지 않습니다. 별도 초안의 로컬 테스트 응답과 관리자 비밀번호 파일은 운영 저장소에 포함하지 않았습니다.
