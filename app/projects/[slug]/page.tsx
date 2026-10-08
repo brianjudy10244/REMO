@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { SiteFrame } from "@/app/components/site-chrome";
 import { getSiteData } from "@/lib/db";
 import { getProjectDetail, getProjectHref, getProjectSlug } from "@/lib/project-details";
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
+  if (slug === "pln") permanentRedirect("/projects/studyspace");
   const { projects } = await getSiteData();
   const index = projects.findIndex((item) => getProjectSlug(item) === slug);
   if (index < 0) notFound();

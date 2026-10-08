@@ -17,7 +17,7 @@ const settingsDefaults: SiteSettings = {
 function defaultSiteData(): SiteData {
   return {
     settings: settingsDefaults,
-    projects: ["무디즘", "PLN", "데이터플로우", "노웨사"].map((name, i) => ({ id: `demo-p-${i}`, name, position: i + 1, isVisible: true })),
+    projects: ["무디즘", "STUDYSPACE", "데이터플로우", "노웨사"].map((name, i) => ({ id: `demo-p-${i}`, name, position: i + 1, isVisible: true })),
     members: ["유진", "정우", "브루노", "이든", "막스", "조이", "로", "겸", "쏠", "비크"].map((name, i) => ({ id: `demo-m-${i}`, name, position: i + 1, isVisible: true })),
     assets: [],
   };
@@ -54,7 +54,7 @@ async function ensureContentTables() {
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`;
-        for (const [position, name] of ["무디즘", "PLN", "데이터플로우", "노웨사"].entries()) {
+        for (const [position, name] of ["무디즘", "STUDYSPACE", "데이터플로우", "노웨사"].entries()) {
           await query`INSERT INTO projects (name, position) VALUES (${name}, ${position + 1}) ON CONFLICT (name) DO NOTHING`;
         }
       }
@@ -82,6 +82,8 @@ async function ensureContentTables() {
         )`;
       }
       await query`CREATE INDEX IF NOT EXISTS projects_position_idx ON projects (position)`;
+      await query`UPDATE projects SET name = 'STUDYSPACE', updated_at = NOW()
+        WHERE name = 'PLN' AND NOT EXISTS (SELECT 1 FROM projects WHERE name = 'STUDYSPACE')`;
       await query`CREATE INDEX IF NOT EXISTS members_position_idx ON members (position)`;
     })().then(() => undefined).catch((error) => {
       contentTablesReady = null;
