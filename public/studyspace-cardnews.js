@@ -5,10 +5,10 @@
   const H = 1350;
   const MAX_CARDS = 12;
   const templates = [
-    { id: 'editorial', name: 'EDITORIAL', titleColor: '#19282b', bodyColor: '#43545a', titleSize: 84, bodySize: 38 },
-    { id: 'blue', name: 'SKY BLUE', titleColor: '#1c3445', bodyColor: '#375366', titleSize: 82, bodySize: 38 },
-    { id: 'night', name: 'MIDNIGHT', titleColor: '#f5f3eb', bodyColor: '#c7dbe2', titleSize: 86, bodySize: 38 },
-    { id: 'coral', name: 'CORAL', titleColor: '#1a272b', bodyColor: '#2a3437', titleSize: 83, bodySize: 38 },
+    { id: 'editorial', name: 'IVORY', titleColor: '#171715', bodyColor: '#4f4f49', titleSize: 84, bodySize: 38 },
+    { id: 'blue', name: 'ORANGE', titleColor: '#171715', bodyColor: '#282822', titleSize: 82, bodySize: 38 },
+    { id: 'night', name: 'CHARCOAL', titleColor: '#f4f3ee', bodyColor: '#dddcd1', titleSize: 86, bodySize: 38 },
+    { id: 'coral', name: 'LILAC', titleColor: '#171715', bodyColor: '#4f4a56', titleSize: 84, bodySize: 38 },
   ];
   const $ = (id) => document.getElementById(id);
   const dom = Object.fromEntries(['cardCanvas','cardList','cardCount','canvasPosition','templateList','templateUpload','titleInput','bodyInput','titleColor','bodyColor','titleSize','bodySize','titleSizeValue','bodySizeValue','addCard','duplicateCard','moveCardLeft','moveCardRight','removeCard','downloadCurrent','downloadAll','toast'].map((id) => [id, $(id)]));
@@ -66,35 +66,35 @@
     }
     switch (card.templateId) {
       case 'blue': {
-        ctx.fillStyle = '#bde0ef'; ctx.fillRect(0, 0, W, H);
-        drawGrid(ctx, '#ffffff', 120, .47);
-        ctx.fillStyle = '#d9eff7'; ctx.beginPath(); ctx.arc(1010, 240, 435, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#94cadd'; ctx.beginPath(); ctx.arc(1090, 150, 300, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#589ebc'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(85, 1010); ctx.lineTo(985, 1010); ctx.stroke();
+        ctx.fillStyle = '#f15a36'; ctx.fillRect(0, 0, W, H);
+        drawGrid(ctx, '#f4f3ee', 120, .3);
+        ctx.fillStyle = '#f7aa91'; ctx.beginPath(); ctx.arc(1010, 240, 435, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#f15a36'; ctx.beginPath(); ctx.arc(1090, 150, 300, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#171715'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(85, 1010); ctx.lineTo(985, 1010); ctx.stroke();
         break;
       }
       case 'night': {
-        ctx.fillStyle = '#19394c'; ctx.fillRect(0, 0, W, H);
-        drawGrid(ctx, '#7ea7b8', 116, .14);
-        ctx.strokeStyle = '#83afc0'; ctx.lineWidth = 2;
+        ctx.fillStyle = '#242620'; ctx.fillRect(0, 0, W, H);
+        drawGrid(ctx, '#d4d4c8', 116, .14);
+        ctx.strokeStyle = '#a9aa9c'; ctx.lineWidth = 2;
         [0, 1, 2].forEach((i) => { ctx.beginPath(); ctx.arc(995, 258, 177 + i * 84, 0, Math.PI * 2); ctx.stroke(); });
-        ctx.fillStyle = '#f08b70'; ctx.beginPath(); ctx.arc(955, 253, 35, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#f15a36'; ctx.beginPath(); ctx.arc(955, 253, 35, 0, Math.PI * 2); ctx.fill();
         break;
       }
       case 'coral': {
-        ctx.fillStyle = '#ff765b'; ctx.fillRect(0, 0, W, H);
-        ctx.fillStyle = '#ffad91'; ctx.beginPath(); ctx.arc(1000, 250, 330, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#ff765b'; ctx.beginPath(); ctx.arc(1000, 250, 190, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#e7503c'; ctx.fillRect(0, 1120, W, 230);
+        ctx.fillStyle = '#d9d1e6'; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#eee9f3'; ctx.beginPath(); ctx.arc(1000, 250, 330, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#d9d1e6'; ctx.beginPath(); ctx.arc(1000, 250, 190, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#c5b9d5'; ctx.fillRect(0, 1120, W, 230);
         break;
       }
       default: {
-        ctx.fillStyle = '#edf0eb'; ctx.fillRect(0, 0, W, H);
-        drawGrid(ctx, '#bac9c7', 120, .26);
-        ctx.strokeStyle = '#a6b8b5'; ctx.lineWidth = 2; ctx.strokeRect(42, 42, W - 84, H - 84);
-        ctx.fillStyle = '#cadbd9'; ctx.fillRect(790, 116, 215, 215);
-        ctx.fillStyle = '#f9faf4'; ctx.fillRect(825, 151, 215, 215);
-        ctx.fillStyle = '#fe7656'; ctx.fillRect(854, 180, 215, 215);
+        ctx.fillStyle = '#dfe1d9'; ctx.fillRect(0, 0, W, H);
+        drawGrid(ctx, '#b7b9af', 120, .26);
+        ctx.strokeStyle = '#a6a8a0'; ctx.lineWidth = 2; ctx.strokeRect(42, 42, W - 84, H - 84);
+        ctx.fillStyle = '#c5c8bd'; ctx.fillRect(790, 116, 215, 215);
+        ctx.fillStyle = '#f4f3ee'; ctx.fillRect(825, 151, 215, 215);
+        ctx.fillStyle = '#f15a36'; ctx.fillRect(854, 180, 215, 215);
       }
     }
   }
@@ -137,12 +137,12 @@
     drawBackground(ctx, card);
     const isNight = card.templateId === 'night';
     const isCustom = card.templateId.startsWith('custom:');
-    const metaColor = isNight || isCustom ? '#f1f3eb' : '#24373b';
+    const metaColor = isNight || isCustom ? '#f4f3ee' : '#171715';
     ctx.fillStyle = metaColor;
-    ctx.font = '700 30px "DM Sans", sans-serif';
+    ctx.font = '700 30px "Noto Sans KR", sans-serif';
     ctx.textBaseline = 'top';
     ctx.fillText('STUDYSPACE', 84, 82);
-    ctx.font = '600 24px "DM Sans", sans-serif';
+    ctx.font = '600 24px "Noto Sans KR", sans-serif';
     ctx.fillText('BY REMO  /  CARD NEWS', 84, 124);
     ctx.textAlign = 'right';
     ctx.fillText(`${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`, 996, 84);
@@ -163,7 +163,7 @@
     ctx.strokeStyle = metaColor; ctx.globalAlpha = .6;
     ctx.beginPath(); ctx.moveTo(84, 1250); ctx.lineTo(996, 1250); ctx.stroke();
     ctx.globalAlpha = 1; ctx.fillStyle = metaColor;
-    ctx.font = '700 22px "DM Sans", sans-serif';
+    ctx.font = '700 22px "Noto Sans KR", sans-serif';
     ctx.fillText('MAKE ROOM FOR YOUR STUDY', 84, 1274);
     ctx.textAlign = 'right'; ctx.fillText('STUDYSPACE ↗', 996, 1274); ctx.textAlign = 'left';
   }
@@ -180,7 +180,7 @@
   }
 
   function thumbColor(templateId) {
-    return { editorial: '#edf0eb', blue: '#bde0ef', night: '#19394c', coral: '#ff765b' }[templateId] || '#789aa6';
+    return { editorial: '#dfe1d9', blue: '#f15a36', night: '#242620', coral: '#d9d1e6' }[templateId] || '#686862';
   }
 
   function renderList() {

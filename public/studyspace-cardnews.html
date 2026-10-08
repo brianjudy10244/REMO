@@ -8,18 +8,20 @@
   <meta name="description" content="STUDYSPACE를 소개하는 카드뉴스를 만들고 이미지로 저장하세요.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/studyspace-cardnews.css">
+  <link rel="stylesheet" href="/studyspace-cardnews-unified.css">
   <script src="/studyspace-cardnews.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/projects/studyspace" aria-label="STUDYSPACE 소개 페이지로 이동"><span class="brand-mark">S<span>↗</span></span><span>STUDYSPACE<small>by REMO</small></span></a>
-    <div class="header-center">CARD NEWS <span>STUDIO / 01</span></div>
-    <a class="back-link" href="/projects/studyspace">프로젝트로 돌아가기 <span aria-hidden="true">↗</span></a>
-  </header>
-
-  <div class="intro-strip"><span>MAKE IT YOURS</span><p>STUDYSPACE를 소개하는 카드뉴스를 직접 만들어 보세요.</p><span>1080 × 1350 PX</span></div>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="site-logo" href="/" aria-label="REMO 홈">REMO<span>✳</span></a>
+      <nav class="site-nav" aria-label="주요 메뉴"><a href="/">홈</a><a href="/about-us">ABOUT US</a><a class="active" href="/projects">프로젝트</a><a href="/members">멤버</a><a href="/board">게시판</a></nav>
+      <span class="header-meta">LEINN SEOUL · YEAR 02</span>
+    </header>
+    <section class="page-hero" aria-labelledby="page-title"><span class="page-index">02 / STUDYSPACE</span><div><p class="eyebrow">STUDYSPACE · CARD NEWS</p><h1 id="page-title">카드뉴스 제작실<span>.</span></h1></div><p>템플릿을 고르고 문구를 작성해<br>STUDYSPACE를 소개하는 이미지를 만드세요.</p></section>
+    <div class="project-subnav"><a href="/projects/studyspace">← STUDYSPACE 프로젝트</a><span>CARD NEWS STUDIO / 1080 × 1350</span></div>
 
   <main class="workspace">
     <section class="panel storyboard" aria-labelledby="storyboard-title">
@@ -64,6 +66,8 @@
   </main>
 
   <footer class="download-bar"><div><span class="download-label">READY TO SHARE</span><p>완성한 카드를 이미지로 가져가세요.</p></div><div class="download-actions"><button id="downloadCurrent" class="secondary-button" type="button">현재 카드 PNG <span>↘</span></button><button id="downloadAll" class="primary-button" type="button">전체 카드 ZIP <span>↘</span></button></div></footer>
+    <footer class="site-footer"><a class="site-logo" href="/">REMO<span>✳</span></a><p>서로 다른 우리가 모여 REMO가 됩니다.</p><div><a href="/admin">관리자</a><span>© 2026 TEAM REMO</span></div></footer>
+  </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

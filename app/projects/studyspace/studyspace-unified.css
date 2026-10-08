@@ -1,0 +1,50 @@
+/* StudySpace uses the REMO page system while keeping its product content. */
+.studyspace{--paper:#f4f3ee;--ink:#171715;--blue:#e7e5dd;--line:#cdcdc5;--space:0px;background:var(--paper);color:var(--ink)}
+.studyspace .masthead{grid-template-columns:1fr auto auto;gap:clamp(15px,3vw,48px);align-items:center;margin:0;padding:24px 0;border-bottom:1px solid var(--ink)}
+.studyspace .wordmark{font-size:1rem;line-height:1;font-weight:800;letter-spacing:-.06em}
+.studyspace .wordmark span{position:static;margin-left:8px;color:#f15a36;font-size:1.15rem}
+.studyspace .edition{justify-self:end;color:#686862;font-size:.68rem;letter-spacing:.12em}
+.studyspace .header-link{font-size:.76rem;letter-spacing:0}
+.studyspace .header-link span{margin-left:8px;color:#f15a36;font-size:1rem}
+.studyspace .hero{padding:0;border-bottom:1px solid var(--ink)}
+.studyspace .hero-meta,.studyspace .section-meta{color:#686862;font-size:.68rem;letter-spacing:.12em}
+.studyspace .hero-meta{padding:22px 0 0}
+.studyspace .hero-type{padding:clamp(55px,7vw,110px) 0 30px}
+.studyspace .hero h1{font-size:var(--type-page);font-weight:900;line-height:1.12;letter-spacing:-.075em}
+.studyspace .hero h1 .offset{margin-left:0;margin-top:0}
+.studyspace .glass{display:none}
+.studyspace .hero-bottom{align-items:flex-end;margin:20px 0 clamp(55px,6vw,95px)}
+.studyspace .hero-bottom p{color:#686862;font-size:clamp(.95rem,1.15vw,1.12rem);line-height:1.85}
+.studyspace .cta,.studyspace .submit-button,.studyspace .cardnews-promo>a{background:#171715;color:#fff;font-size:.86rem;font-weight:700}
+.studyspace .cta:hover,.studyspace .submit-button:hover,.studyspace .cardnews-promo>a:hover{background:#f15a36;color:#171715}
+.studyspace .hero-foot{border-bottom:0;padding:18px 0;color:#686862}
+.studyspace .overview{padding:clamp(72px,8vw,130px) 0}
+.studyspace .section-heading{margin:35px 0 40px}
+.studyspace .section-heading h2,.studyspace .features h2,.studyspace .survey-intro h2{font-size:var(--type-section);font-weight:700;line-height:1.4;letter-spacing:-.07em}
+.studyspace .section-heading p,.studyspace .feature-list p{color:#686862}
+.studyspace .product-image{background:#e7e5dd;padding:clamp(16px,3vw,48px)}
+.studyspace .features{padding:0 0 clamp(72px,8vw,130px)}
+.studyspace .features h2{margin:28px 0 42px}
+.studyspace .feature-list article{border-color:#cdcdc5}
+.studyspace .feature-no,.studyspace .feature-tag{color:#f15a36;font-weight:700}
+.studyspace .feature-list h3{font-weight:700}
+.studyspace .feature-note,.studyspace .field-hint,.studyspace .submit-note{color:#686862}
+.studyspace .survey-section{background:#e7e5dd;gap:clamp(35px,6vw,90px);padding:clamp(56px,7vw,100px) clamp(24px,3vw,50px)}
+.studyspace .survey-intro h2 span{color:#f15a36}
+.studyspace .survey-intro>p{color:#4f4f49}
+.studyspace .progress-track{background:#cdcdc5}
+.studyspace .progress-track div{background:#f15a36}
+.studyspace .options label{border-color:#bcbab1;background:#f4f3ee}
+.studyspace .options label:has(input:checked){background:#171715;border-color:#171715;color:#fff}
+.studyspace .options input{accent-color:#f15a36}
+.studyspace .options label small,.studyspace textarea::placeholder{color:#686862}
+.studyspace textarea{background:#f4f3ee;border-color:#bcbab1}
+.studyspace .closing{padding:clamp(65px,8vw,120px) 0}
+.studyspace .closing p{font-size:var(--type-page);font-weight:800}
+.studyspace .closing p span{color:#a9aaa1}
+.studyspace .cardnews-promo{background:#f15a36;padding:clamp(55px,7vw,105px) clamp(24px,3vw,50px)}
+.studyspace .cardnews-promo h2{font-size:var(--type-section);font-weight:800}
+.studyspace #reward-dialog{background:#f4f3ee;color:#171715}
+.studyspace #reward-dialog::backdrop{background:rgba(23,23,21,.76)}
+.studyspace .reward-content img{background:#e7e5dd}
+@media(max-width:760px){.studyspace .masthead{grid-template-columns:1fr auto;padding:20px 0}.studyspace .edition{display:none}.studyspace .hero-type{padding:55px 0 24px}.studyspace .hero h1{font-size:var(--type-page)}.studyspace .hero h1 .offset{margin-left:0;margin-top:0}.studyspace .hero-bottom{align-items:flex-start}.studyspace .overview{padding:70px 0}.studyspace .features{padding:0 0 70px}.studyspace .survey-section{padding:55px 22px}.studyspace .survey-intro h2{font-size:var(--type-section)}.studyspace .closing{padding:65px 0}}
