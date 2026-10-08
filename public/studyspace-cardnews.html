@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dbe9ed">
+  <title>STUDYSPACE 카드뉴스 제작실</title>
+  <meta name="description" content="STUDYSPACE를 소개하는 카드뉴스를 만들고 이미지로 저장하세요.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/studyspace-cardnews.css">
+  <script src="/studyspace-cardnews.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/projects/studyspace" aria-label="STUDYSPACE 소개 페이지로 이동"><span class="brand-mark">S<span>↗</span></span><span>STUDYSPACE<small>by REMO</small></span></a>
+    <div class="header-center">CARD NEWS <span>STUDIO / 01</span></div>
+    <a class="back-link" href="/projects/studyspace">프로젝트로 돌아가기 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <div class="intro-strip"><span>MAKE IT YOURS</span><p>STUDYSPACE를 소개하는 카드뉴스를 직접 만들어 보세요.</p><span>1080 × 1350 PX</span></div>
+
+  <main class="workspace">
+    <section class="panel storyboard" aria-labelledby="storyboard-title">
+      <div class="panel-heading"><div><p class="eyebrow">01 / STORYBOARD</p><h1 id="storyboard-title">카드 구성</h1></div><span id="cardCount" class="count">03 CARDS</span></div>
+      <p class="panel-help">카드를 골라 각각의 문구와 디자인을 바꿔 보세요.</p>
+      <div id="cardList" class="card-list" aria-label="카드 목록"></div>
+      <button id="addCard" class="add-card" type="button"><span>＋</span> 새 카드 추가</button>
+      <div class="story-note"><span class="star">✳</span><p>첫 카드에 시선을 끄는 문장을, 마지막 카드에 행동을 부르는 문장을 넣어 보세요.</p></div>
+    </section>
+
+    <section class="canvas-panel" aria-labelledby="preview-title">
+      <div class="canvas-top"><div><p class="eyebrow">02 / LIVE PREVIEW</p><h2 id="preview-title">미리보기</h2></div><span id="canvasPosition">01 / 03</span></div>
+      <div class="canvas-shell"><canvas id="cardCanvas" width="1080" height="1350" role="img" aria-label="편집 중인 카드뉴스 미리보기"></canvas></div>
+      <div class="canvas-footer"><span>카드뉴스 · 세로형 4:5</span><span>다운로드하면 고화질 PNG로 저장됩니다.</span></div>
+    </section>
+
+    <section class="panel editor" aria-labelledby="editor-title">
+      <div class="panel-heading"><div><p class="eyebrow">03 / EDIT YOUR CARD</p><h2 id="editor-title">디자인 편집</h2></div><span class="editor-icon" aria-hidden="true">✦</span></div>
+      <div class="editor-section">
+        <div class="section-title"><h3>템플릿 선택</h3><span>01 — 04</span></div>
+        <div id="templateList" class="template-list" aria-label="샘플 템플릿"></div>
+        <label class="upload-template" for="templateUpload"><span aria-hidden="true">↑</span><span>내 이미지 템플릿 업로드<small>PNG, JPG, WEBP · 최대 10MB</small></span></label>
+        <input id="templateUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        <p class="upload-note">업로드한 이미지는 이 브라우저에서만 사용됩니다.</p>
+      </div>
+      <div class="editor-section">
+        <div class="section-title"><h3>문구 작성</h3><span>TEXT</span></div>
+        <label class="field-label" for="titleInput">뉴스 제목</label>
+        <textarea id="titleInput" rows="3" maxlength="90" placeholder="제목을 입력하세요"></textarea>
+        <label class="field-label" for="bodyInput">내용</label>
+        <textarea id="bodyInput" rows="4" maxlength="220" placeholder="내용을 입력하세요"></textarea>
+      </div>
+      <div class="editor-section">
+        <div class="section-title"><h3>글자 스타일</h3><span>TYPE</span></div>
+        <div class="style-row"><label for="titleColor">제목 색상</label><input id="titleColor" type="color" value="#17242a" aria-label="제목 글자 색상"></div>
+        <div class="style-row range-row"><label for="titleSize">제목 크기</label><input id="titleSize" type="range" min="48" max="112" step="2" value="82"><output id="titleSizeValue" for="titleSize">82px</output></div>
+        <div class="style-row"><label for="bodyColor">내용 색상</label><input id="bodyColor" type="color" value="#263d46" aria-label="내용 글자 색상"></div>
+        <div class="style-row range-row"><label for="bodySize">내용 크기</label><input id="bodySize" type="range" min="26" max="56" step="2" value="37"><output id="bodySizeValue" for="bodySize">37px</output></div>
+      </div>
+      <div class="editor-section action-section"><div class="section-title"><h3>카드 관리</h3><span>TOOLS</span></div><div class="small-actions"><button id="duplicateCard" type="button">카드 복제</button><button id="moveCardLeft" type="button">앞으로</button><button id="moveCardRight" type="button">뒤로</button><button id="removeCard" type="button">카드 삭제</button></div></div>
+    </section>
+  </main>
+
+  <footer class="download-bar"><div><span class="download-label">READY TO SHARE</span><p>완성한 카드를 이미지로 가져가세요.</p></div><div class="download-actions"><button id="downloadCurrent" class="secondary-button" type="button">현재 카드 PNG <span>↘</span></button><button id="downloadAll" class="primary-button" type="button">전체 카드 ZIP <span>↘</span></button></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
