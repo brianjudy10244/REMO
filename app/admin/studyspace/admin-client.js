@@ -1,3 +1,4 @@
+import { downloadSurveyCsv } from '@/lib/studyspace-export.js';
 import { groups } from '@/lib/studyspace-options.js';
 export function initAdmin(root) {
 const controller = new AbortController();
@@ -26,7 +27,13 @@ function valueFor(response,key){
  return label(key,response[key]);
 }
 function filtered(){return responses.filter(r => (!$('#stage-filter').value || r.stage===$('#stage-filter').value) && (!$('#interest-filter').value || r.interest===$('#interest-filter').value) && fields.map(([key])=>valueFor(r,key)).join(' ').toLowerCase().includes($('#search').value.trim().toLowerCase()));}
+function updateExportState(){
+ const count = $('#export-scope').value === 'filtered' ? filtered().length : responses.length;
+ $('#export').disabled = count === 0;
+ $('#export-count').textContent = `내려받을 응답 ${count}개`;
+}
 function renderList(){
+ updateExportState();
  const rows=filtered();$('#result-count').textContent=`${responses.length}개 중 ${rows.length}개 표시`;
  $('#response-list').replaceChildren();$('#empty-state').hidden=rows.length>0;$('#empty-state').textContent=responses.length?'검색 조건에 맞는 응답이 없습니다.':'아직 설문 응답이 없습니다. 응답이 제출되면 여기에 표시됩니다.';
  rows.forEach(r=>{
@@ -48,11 +55,13 @@ async function load(){
 }
 listen($('#refresh'),'click',load);for(const id of ['#search','#stage-filter','#interest-filter'])listen($(id),'input',renderList);listen($('#detail-close'),'click',()=>$('#detail').close());
 listen($('#export'),'click',()=>{
- // Prevent free-text cells from being interpreted as spreadsheet formulas.
- const cell=v=>'"'+String(v).replace(/^[\s]*[=+@-]/,"'$&").replaceAll('"','""')+'"';
- const csv='\uFEFF'+[fields.map(([,title])=>cell(title)).join(','),...filtered().map(r=>fields.map(([key])=>cell(valueFor(r,key))).join(','))].join('\r\n');
- const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`studyspace-survey-${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);
+ const scope = $('#export-scope').value;
+ const rows = scope === 'filtered' ? filtered() : responses;
+ if (!rows.length) return;
+ downloadSurveyCsv(rows, valueFor, scope);
+ $('#export-count').textContent = `${rows.length}개 응답을 CSV 파일로 내려받았습니다.`;
 });
+listen($('#export-scope'),'change',updateExportState);
 load();
 
 return () => { controller.abort(); $("#detail").close(); };
