@@ -5,6 +5,18 @@ import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 type Source = { id: string; title: string; document: string; url: string };
 type Message = { role: "user" | "assistant"; text: string; sources?: Source[] };
 const suggestions = ["REMO의 미션과 목표는 무엇인가요?", "어떤 프로젝트를 진행하나요?", "게시판 글은 누가 수정할 수 있나요?"];
+const conversationStorageKey = "remo_support_conversation_id";
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+function conversationId() {
+  try {
+    const previous = sessionStorage.getItem(conversationStorageKey);
+    if (previous && uuidPattern.test(previous)) return previous;
+    const created = crypto.randomUUID();
+    sessionStorage.setItem(conversationStorageKey, created);
+    return created;
+  } catch { return crypto.randomUUID(); }
+}
 
 export function SupportChat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -25,7 +37,7 @@ export function SupportChat() {
       const response = await fetch("/api/support/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question, history }),
+        body: JSON.stringify({ message: question, history, conversationId: conversationId() }),
       });
       const result = await response.json() as { answer?: string; sources?: Source[]; error?: string };
       if (!response.ok || !result.answer) throw new Error(result.error || "답변을 불러오지 못했어요.");
@@ -53,6 +65,6 @@ export function SupportChat() {
     {messages.length === 0 && <div className="support-suggestions"><span>이렇게 물어보세요</span><div>{suggestions.map((item) => <button type="button" key={item} onClick={() => void ask(item)}>{item} <span aria-hidden="true">↗</span></button>)}</div></div>}
     <form className="support-chat-form" onSubmit={submit}><label className="visually-hidden" htmlFor="support-question">REMO에 질문하기</label><textarea id="support-question" value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={onKeyDown} placeholder="궁금한 점을 입력하세요" maxLength={500} rows={2} disabled={busy} /><button type="submit" disabled={busy || draft.trim().length < 2} aria-label="질문 보내기">↗</button></form>
     {error && <p className="support-error" role="alert">{error}</p>}
-    <p className="support-chat-note">문서에 없는 내용은 답변하지 않습니다. 개인정보는 입력하지 말아 주세요.</p>
+    <p className="support-chat-note">질문과 답변은 저장됩니다. 개인정보는 입력하지 말아 주세요.</p>
   </div>;
 }

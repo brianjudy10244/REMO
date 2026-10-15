@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { briefingSource, retrieveSupportPassages } from "@/lib/support-knowledge";
+import { saveSupportExchange, type SupportSource } from "@/lib/support-chat-db";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -9,6 +10,16 @@ const limits = new Map<string, { count: number; resetAt: number }>();
 
 function respond(data: object, status = 200) {
   return NextResponse.json(data, { status, headers: { "Cache-Control": "no-store" } });
+}
+
+async function storedAnswer(input: { conversationId: string; question: string; answer: string; sources: SupportSource[]; model: string | null }) {
+  try {
+    await saveSupportExchange(input);
+    return respond({ answer: input.answer, sources: input.sources, conversationId: input.conversationId });
+  } catch (error) {
+    console.error("Support chat save failed", error instanceof Error ? error.name : "unknown");
+    return respond({ error: "상담 내용을 저장하지 못했어요. 잠시 후 다시 질문해 주세요." }, 503);
+  }
 }
 
 function limited(ip: string) {
@@ -38,12 +49,15 @@ export async function POST(request: Request) {
     input = JSON.parse(raw);
   } catch { return respond({ error: "질문 내용을 확인해 주세요." }, 400); }
   if (!input || typeof input !== "object") return respond({ error: "질문 내용을 확인해 주세요." }, 400);
-  const { message, history } = input as { message?: unknown; history?: unknown };
+  const { message, history, conversationId: providedConversationId } = input as { message?: unknown; history?: unknown; conversationId?: unknown };
   if (typeof message !== "string" || message.trim().length < 2 || message.length > 500) return respond({ error: "질문은 2~500자로 입력해 주세요." }, 400);
   if (history !== undefined && (!Array.isArray(history) || history.length > 6 || history.some((item) => !item || typeof item !== "object" || !["user", "assistant"].includes(item.role) || typeof item.text !== "string" || item.text.length > 600))) return respond({ error: "대화 내용을 확인해 주세요." }, 400);
+  if (providedConversationId !== undefined && (typeof providedConversationId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(providedConversationId))) return respond({ error: "대화 정보를 확인해 주세요." }, 400);
+  const conversationId = providedConversationId as string | undefined || crypto.randomUUID();
+  const question = message.trim();
 
   const selected = retrieveSupportPassages(message);
-  if (selected.length === 0) return respond({ answer: "제공된 REMO 브리핑 문서에서는 그 내용을 확인할 수 없어요. 팀 소개, 핵심 가치, 구성원, 프로젝트나 게시판에 관해 물어봐 주세요.", sources: [] });
+  if (selected.length === 0) return storedAnswer({ conversationId, question, answer: "제공된 REMO 브리핑 문서에서는 그 내용을 확인할 수 없어요. 팀 소개, 핵심 가치, 구성원, 프로젝트나 게시판에 관해 물어봐 주세요.", sources: [], model: null });
 
   const key = process.env.GEMINI_API_KEY?.trim();
   const model = process.env.GEMINI_MODEL?.trim();
@@ -69,8 +83,8 @@ export async function POST(request: Request) {
     const payload = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string; thought?: boolean }> } }> };
     const answer = payload.candidates?.[0]?.content?.parts?.filter((part) => !part.thought && typeof part.text === "string").map((part) => part.text).join(" ").trim();
     if (!answer) return respond({ error: "답변을 만들지 못했어요. 질문을 바꿔 다시 시도해 주세요." }, 503);
-    if (/제공된 문서에서는 확인할 수 없어요|문서에서 확인할 수 없어요/.test(answer)) return respond({ answer, sources: [] });
-    return respond({ answer, sources: selected.map((item) => ({ id: item.id, title: item.heading, document: briefingSource.title, url: briefingSource.url })) });
+    if (/제공된 문서에서는 확인할 수 없어요|문서에서 확인할 수 없어요/.test(answer)) return storedAnswer({ conversationId, question, answer, sources: [], model });
+    return storedAnswer({ conversationId, question, answer, sources: selected.map((item) => ({ id: item.id, title: item.heading, document: briefingSource.title, url: briefingSource.url })), model });
   } catch (error) {
     console.error("Gemini support request error", error instanceof Error ? error.name : "unknown");
     return respond({ error: "지금은 답변을 불러오지 못했어요. 잠시 후 다시 질문해 주세요." }, 503);

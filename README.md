@@ -67,3 +67,5 @@ Vercel 프로젝트에 Neon Marketplace integration을 연결하고, private Blo
 `/support`에서 제공된 REMO 핵심 현황 및 전략 브리핑 문서의 팀 정체성·미션·비전·핵심 가치·구성원·프로젝트·게시판 운영 방식을 검색해 답합니다. 답변 아래에 참고한 문서의 섹션을 표시합니다. 문서에서 확인되지 않는 내용은 추측하지 않으며, 게시판 기록 예시는 현재 현황으로 안내하지 않습니다.
 
 Vercel의 Project Settings → Environment Variables에 `GEMINI_MODEL=gemini-3.5-flash-lite`와 비밀 값 `GEMINI_API_KEY`를 등록한 뒤 재배포하세요. 두 변수 모두 서버에서만 읽으며 브라우저에는 전달하지 않습니다. 문서 내용이 바뀌면 `lib/support-knowledge.ts`의 검색 인덱스도 갱신해야 합니다.
+
+완료된 고객 상담의 질문·답변·참고 출처는 `DATABASE_URL`로 연결된 Neon의 `support_chat_exchanges` 테이블에 저장됩니다. 브라우저 탭별 대화 ID로 여러 질문을 묶으며 IP 주소는 저장하지 않습니다. `/admin/support`에서 관리자만 최근 100건과 전체 건수를 볼 수 있습니다. 답변을 저장하지 못하면 채팅 화면에 재시도 안내를 표시합니다.
