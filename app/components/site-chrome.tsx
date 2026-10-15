@@ -10,6 +10,7 @@ const navItems = [
   { href: "/projects", label: "프로젝트" },
   { href: "/members", label: "멤버" },
   { href: "/board", label: "게시판" },
+  { href: "/support", label: "고객 상담" },
 ];
 
 export function SiteHeader() {
