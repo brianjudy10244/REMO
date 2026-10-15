@@ -64,6 +64,6 @@ Vercel 프로젝트에 Neon Marketplace integration을 연결하고, private Blo
 
 ## 고객 상담 챗봇
 
-`/support`에서 제공된 REMO 브리핑 보고서의 팀 소개·게시판 정책·2026년 10월 초 게시글 현황을 검색해 답합니다. 답변 아래에 참고한 문서의 섹션을 표시합니다. 문서에서 확인되지 않는 내용은 추측하지 않으며, 게시글 수는 실시간 데이터가 아닌 문서 작성 시점의 기록으로 안내합니다.
+`/support`에서 제공된 REMO 핵심 현황 및 전략 브리핑 문서의 팀 정체성·미션·비전·핵심 가치·구성원·프로젝트·게시판 운영 방식을 검색해 답합니다. 답변 아래에 참고한 문서의 섹션을 표시합니다. 문서에서 확인되지 않는 내용은 추측하지 않으며, 게시판 기록 예시는 현재 현황으로 안내하지 않습니다.
 
 Vercel의 Project Settings → Environment Variables에 `GEMINI_MODEL=gemini-3.5-flash-lite`와 비밀 값 `GEMINI_API_KEY`를 등록한 뒤 재배포하세요. 두 변수 모두 서버에서만 읽으며 브라우저에는 전달하지 않습니다. 문서 내용이 바뀌면 `lib/support-knowledge.ts`의 검색 인덱스도 갱신해야 합니다.

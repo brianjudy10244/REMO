@@ -1,7 +1,7 @@
-/** A dated, server-only retrieval index from the REMO briefing supplied by the team. */
+/** Server-only passages curated from the REMO strategy briefing supplied by the team. */
 export const briefingSource = {
-  title: "REMO (LEINN Seoul Year 02) 브리핑 보고서",
-  url: "https://docs.google.com/document/d/158Ht1W1tewFN_n7_qpjcsDnDUP1W6-0dKCmb9ZKPzII/edit",
+  title: "REMO (LEINN SEOUL · YEAR 02) 핵심 현황 및 전략 브리핑 문서",
+  url: "https://docs.google.com/document/d/1qMLG4ENcxf4EMzkAbq2ACEUmo3STpbZoXKo2tpBdAKQ/edit",
 };
 
 type Passage = { id: string; heading: string; text: string; keywords: string[] };
@@ -9,41 +9,48 @@ type Passage = { id: string; heading: string; text: string; keywords: string[] }
 const passages: Passage[] = [
   {
     id: "1",
-    heading: "팀 정체성 및 개요",
-    text: "REMO는 LEINN Seoul 2차년도(Year 02, 2026년)에 활동하는 프로젝트 팀이다. 문서에 적힌 핵심 슬로건은 ‘WE ARE REMO. A WAVE, TOGETHER’이며, 팀 방향성은 ‘서로 다른 우리가 모여 한 장면을 만듭니다.’이다. 팀의 주요 정보 채널로 ABOUT US와 COVER STORY ISSUE 02가 언급된다.",
-    keywords: ["리모", "remo", "팀", "소개", "정체성", "방향", "슬로건", "비전", "모토", "leinn", "레인", "2년", "2차년도", "year", "wave", "together", "about us", "커버스토리"],
+    heading: "팀 정체성과 슬로건",
+    text: "REMO는 LEINN SEOUL 2년 차(YEAR 02, 2026년) 프로젝트 팀이다. 서로 다른 관점과 경험을 가진 10명이 학습, 실험, 실행을 통해 비즈니스 성과를 만들고자 한다. 조직 슬로건은 ‘A WAVE, TOGETHER’와 ‘서로 다른 우리가 모여 한 장면을 만듭니다.’이다. 다양한 시선과 경험을 연결하고 개인과 팀이 함께 성장하는 선순환을 지향한다.",
+    keywords: ["어떤 팀", "무슨 팀", "팀 소개", "리모 소개", "정체성", "슬로건", "모토", "wave", "together", "leinn", "레인", "2년", "2차년도", "year"],
   },
   {
     id: "2",
-    heading: "팀 게시판 운용 정책 및 기능",
-    text: "REMO BOARD는 팀 내부의 소식과 생각을 자유롭게 공유하고 저장하기 위한 게시판이다. 누구나 글을 작성할 수 있고, 각 게시글의 점 세 개(···) 메뉴에서 작성자 구별 없이 누구나 수정하거나 삭제할 수 있다. 공동으로 사용하는 게시판이므로 다른 구성원의 글을 변경하거나 삭제할 때에는 신중하게 확인하고 진행하라는 내부 가이드라인이 있다.",
-    keywords: ["게시판", "보드", "board", "글", "게시글", "작성", "수정", "삭제", "권한", "누구나", "점 세개", "메뉴", "소통", "운영", "기능"],
+    heading: "미션·비전·정량적 목표",
+    text: "REMO의 미션은 ‘가치와 문제를 비즈니스로 풀어내며 실행으로 증명한다.’이다. 비전은 ‘혼자가 아닌 팀으로 선순환하며, 시장의 평가 속에서 성장한다.’이다. 정량적 목표는 ‘인당 매출 600만 원 달성 또는 수익 n원 달성’이다. 이 목표는 달성 현황이 아니라 문서에 적힌 목표다.",
+    keywords: ["미션", "비전", "목표", "매출", "수익", "600만", "비즈니스", "시장", "성과"],
   },
   {
     id: "3",
-    heading: "게시글 등록 및 소통 현황",
-    text: "브리핑 문서의 2026년 10월 초 시점에는 팀 게시판에 게시글 4건이 등록되어 있었다. 기능 확인용 게시글과 팀원의 초기 인사·테스트성 게시글이 포함된다. 이 숫자와 내용은 문서 작성 시점의 기록이며, 현재 게시판의 실시간 현황을 뜻하지 않는다.",
-    keywords: ["최근", "현황", "게시글", "몇개", "몇 건", "4건", "테스트", "인사", "등록", "작성일", "최신", "기록"],
+    heading: "5대 핵심 가치와 일하는 방식",
+    text: "REMO의 5대 핵심 가치는 학습(GROWTH), 협력(COLLABORATION), 신뢰(PSYCHOLOGICAL SAFETY), 책임(ACCOUNTABILITY), 실행(EXPERIMENT)이다. 학습은 경험과 배움을 팀에 연결하고 질문하며 행동하는 것, 협력은 다양성과 강점을 합쳐 함께 성과를 만드는 것이다. 신뢰는 어려움과 실수를 제때 공유해 안전한 환경을 만드는 것, 책임은 역할과 약속을 지키고 문제를 함께 해결하는 것, 실행은 목적지가 정해지면 우선 행동하는 것이다.",
+    keywords: ["핵심 가치", "가치", "일하는 방식", "행동 지침", "학습", "협력", "신뢰", "책임", "실행", "growth", "collaboration", "safety", "accountability", "experiment"],
+  },
+  {
+    id: "4",
+    heading: "팀 구성원",
+    text: "REMO는 총 10명으로 구성된다. 문서의 구성원 명단과 순서는 유진(Member 01), 정우(02), 브루노(03), 이든(04), 막스(05), 조이(06), 로(07), 겸(08), 쏠(09), 비크(10)다. 문서는 각자의 상세 역할이나 연락처를 제공하지 않는다.",
+    keywords: ["멤버", "구성원", "팀원", "인원", "명단", "몇 명", "유진", "정우", "브루노", "이든", "막스", "조이", "비크", "쏠"],
+  },
+  {
+    id: "5",
+    heading: "4개 프로젝트",
+    text: "REMO가 기획·운영하는 4개 프로젝트는 무디즘(PROJECT 01), STUDYSPACE(PROJECT 02), 데이터플로우(PROJECT 03), 노웨사(PROJECT 04)다. 네 프로젝트 모두 TEAM REMO (LEINN SEOUL · YEAR 02)에 속한다. 이 브리핑 문서에는 각 프로젝트의 상세 기능이나 진행 상태는 적혀 있지 않다.",
+    keywords: ["프로젝트", "무디즘", "studyspace", "스터디스페이스", "데이터플로우", "노웨사", "4개"],
+  },
+  {
+    id: "6",
+    heading: "팀 게시판 운영",
+    text: "REMO BOARD는 팀 내 소식과 아이디어를 자유롭게 공유하고 기록·저장하는 온라인 게시판이다. 문서에 따르면 누구나 게시글 옆 더보기(···) 메뉴에서 글을 수정하거나 삭제할 수 있다. 공동 사용 공간이므로 다른 사람의 글을 변경하거나 삭제할 때는 신중하게 확인해야 한다. 문서의 LATEST NOTES는 기능 테스트용 글과 팀원 인사·소통 테스트 기록의 예시이며 현재 게시글 수나 실시간 현황은 제공하지 않는다.",
+    keywords: ["게시판", "보드", "board", "게시글", "글쓰기", "작성", "수정", "삭제", "더보기", "점 세개", "권한", "소통", "운영", "latest notes"],
   },
 ];
 
-const ignored = new Set(["무엇", "어떤", "어떻게", "알려", "주세요", "있나요", "있어요", "뭐예요", "인가요", "가능한가요", "되나요", "하고", "대한", "관련", "문의", "상담"]);
-const terms = (value: string) => (value.toLowerCase().match(/[가-힣a-z0-9]+/g) || []).filter((term) => term.length > 1 && !ignored.has(term));
-
 export function retrieveSupportPassages(question: string): Passage[] {
   const query = question.toLowerCase();
-  const queryTerms = terms(query);
-  const ranked = passages.map((passage) => {
-    const body = `${passage.heading} ${passage.text}`.toLowerCase();
-    let score = 0;
-    for (const keyword of passage.keywords) {
-      if (query.includes(keyword)) score += keyword.length >= 3 ? 4 : 2;
-    }
-    for (const term of queryTerms) {
-      if (body.includes(term)) score += term.length >= 3 ? 2 : 1;
-    }
-    return { passage, score };
-  }).sort((a, b) => b.score - a.score);
-  if (!ranked[0] || ranked[0].score < 2) return [];
-  return ranked.filter((entry) => entry.score >= 2 && entry.score >= ranked[0].score * 0.24).slice(0, 3).map((entry) => entry.passage);
+  const ranked = passages.map((passage) => ({
+    passage,
+    score: passage.keywords.reduce((score, keyword) => score + (query.includes(keyword) ? (keyword.length >= 3 ? 3 : 2) : 0), 0),
+  })).sort((a, b) => b.score - a.score);
+  if (!ranked[0] || ranked[0].score === 0) return [];
+  return ranked.filter((item) => item.score >= Math.max(2, ranked[0].score * 0.35)).slice(0, 3).map((item) => item.passage);
 }
