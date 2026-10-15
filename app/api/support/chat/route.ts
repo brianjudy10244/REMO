@@ -69,6 +69,7 @@ export async function POST(request: Request) {
     const payload = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string; thought?: boolean }> } }> };
     const answer = payload.candidates?.[0]?.content?.parts?.filter((part) => !part.thought && typeof part.text === "string").map((part) => part.text).join(" ").trim();
     if (!answer) return respond({ error: "답변을 만들지 못했어요. 질문을 바꿔 다시 시도해 주세요." }, 503);
+    if (/제공된 문서에서는 확인할 수 없어요|문서에서 확인할 수 없어요/.test(answer)) return respond({ answer, sources: [] });
     return respond({ answer, sources: selected.map((item) => ({ id: item.id, title: item.heading, document: briefingSource.title, url: briefingSource.url })) });
   } catch (error) {
     console.error("Gemini support request error", error instanceof Error ? error.name : "unknown");
